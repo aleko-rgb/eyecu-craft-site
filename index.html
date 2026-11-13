@@ -3,9 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow">
-<title>EYE C U Craft — Any photo, set in glass</title>
-<meta name="description" content="EYE C U Craft — appliquez n'importe quelle photo sur un bijou artisanal serti sous cabochon. Vous choisissez, vous cadrez, nous façonnons.">
+<meta name="robots" content="noindex, nofollow"><!-- phase dev/staging : retirer cette ligne à la mise en ligne finale -->
+<title>Bijoux photo personnalisés — EYE C U Craft | Cadeau sous verre, livraison Europe</title>
+<meta name="description" content="Transformez n'importe quelle photo en bijou artisanal serti sous cabochon de verre : collier, bracelet, bague, porte-clés. Cadeau personnalisé fait main à Poznań, livraison dans presque toute l'Europe.">
+<meta name="keywords" content="bijou photo personnalisé, cadeau personnalisé, collier photo, bijou sur mesure, personalised photo jewellery, custom photo gift, spersonalizowana biżuteria, biżuteria ze zdjęciem, cadeau Europe">
+<link rel="canonical" href="https://craft.eye-c-u.eu/">
+<link rel="alternate" hreflang="fr" href="https://craft.eye-c-u.eu/?lang=fr">
+<link rel="alternate" hreflang="en" href="https://craft.eye-c-u.eu/?lang=en">
+<link rel="alternate" hreflang="pl" href="https://craft.eye-c-u.eu/?lang=pl">
+<link rel="alternate" hreflang="x-default" href="https://craft.eye-c-u.eu/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EYE C U Craft">
+<meta property="og:title" content="Bijoux photo personnalisés — EYE C U Craft">
+<meta property="og:description" content="N'importe quelle photo, sertie sous verre. Bijou personnalisé fait main, livraison dans presque toute l'Europe.">
+<meta property="og:image" content="https://pro.eye-c-u.eu/images/gallery-2.jpg">
+<meta property="og:url" content="https://craft.eye-c-u.eu/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Store","name":"EYE C U Craft","image":"https://pro.eye-c-u.eu/images/gallery-2.jpg","description":"Bijoux photo personnalisés sertis sous cabochon de verre, faits main à Poznań.","url":"https://craft.eye-c-u.eu/","telephone":"+48532622171","email":"poznan@eyecu-irisphoto.com","address":{"@type":"PostalAddress","addressLocality":"Poznań","addressCountry":"PL"},"areaServed":{"@type":"Place","name":"Europe"},"brand":{"@type":"Brand","name":"EYE C U Iris Photo"}}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,7 +56,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--bordeaux);outline-o
   display:flex;align-items:center;justify-content:space-between;gap:16px;
 }
 .brand{display:flex;align-items:center;gap:12px;color:#fff}
-.brand img{height:34px}
+.brand img{height:34px;filter:brightness(0) invert(1)}
 .brand .wordmark{
   font-family:'Jost',sans-serif;font-weight:500;letter-spacing:.28em;font-size:.82rem;
   text-transform:uppercase;color:#fff;white-space:nowrap;
@@ -65,13 +81,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--bordeaux);outline-o
 .hero{
   position:relative;min-height:84vh;display:flex;align-items:center;
   color:#fff;overflow:hidden;
-  /* Remplace par une vraie photo : background-image: url('TON_URL'); */
+  /* Photo de présentation reprise du site pro — change l'URL pour une autre image. */
   background:
-    radial-gradient(120% 80% at 20% 10%, rgba(169,128,90,.25), transparent 55%),
+    linear-gradient(180deg,rgba(10,5,6,.42),rgba(10,5,6,.70)),
+    url('https://pro.eye-c-u.eu/images/gallery-2.jpg') center/cover no-repeat,
     linear-gradient(145deg,#1a0a0e 0%,#3a1018 42%,#1c0b10 100%);
   background-size:cover;background-position:center;
 }
-.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,5,6,.25),rgba(10,5,6,.6))}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,5,6,.05),rgba(10,5,6,.25))}
 .hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 6vw;width:100%}
 .hero .eyebrow{
   font-family:'Jost',sans-serif;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;
@@ -177,6 +194,18 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
   section.block{padding:4rem 5vw}
 }
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important;scroll-behavior:auto!important}}
+/* ---- IRIS DIY + MODAL ---- */
+.modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(14,14,14,.6)}
+.modal[hidden]{display:none}
+.modal-box{background:var(--paper);max-width:560px;width:100%;max-height:88vh;overflow:auto;border-radius:2px;padding:28px;position:relative;box-shadow:0 12px 40px rgba(14,14,14,.3)}
+.modal-box h3{font-size:1.8rem;color:var(--bordeaux);margin-bottom:.2em}
+.modal-intro{color:var(--grey);font-weight:300;margin-bottom:1em}
+.modal-x{position:absolute;top:10px;right:14px;background:none;border:none;font-size:1.9rem;line-height:1;color:var(--grey);cursor:pointer}
+.modal-steps{padding-left:0;list-style:none;counter-reset:is;margin:0}
+.modal-steps li{position:relative;padding:9px 0 9px 40px;border-top:1px solid var(--line);font-size:.95rem;font-weight:300}
+.modal-steps li:first-child{border-top:none}
+.modal-steps li::before{counter-increment:is;content:counter(is);position:absolute;left:0;top:9px;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#fff;font-family:'Cormorant Garamond',serif;font-style:italic;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.note-modal{background:var(--bg);border:1px solid var(--line);border-radius:2px;padding:12px 14px;font-size:.85rem;color:var(--grey);margin-top:16px}
 </style>
 </head>
 <body>
@@ -184,9 +213,8 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
 <!-- ============ TOPBAR ============ -->
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="#top" aria-label="EYE C U Craft">
+    <a class="brand" href="#top" aria-label="EYE C U Iris Photo">
       <img data-logo alt="EYE C U Iris Photo">
-      <span class="wordmark">EYE C U<span class="craft">Craft</span></span>
     </a>
     <div class="controls">
       <nav class="cur" aria-label="Currency">
@@ -251,6 +279,29 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
   </div>
 </section>
 
+<!-- ============ IRIS DIY ============ -->
+<section class="block" id="iris">
+  <div class="section-head">
+    <div class="eyebrow" data-t="iris_eyebrow"></div>
+    <h2 data-t="iris_title"></h2>
+    <p data-t="iris_sub"></p>
+  </div>
+  <div style="text-align:center">
+    <button class="btn btn-solid" id="irisOpen" data-t="iris_cta"></button>
+  </div>
+</section>
+
+<!-- Modal iris -->
+<div class="modal" id="irisModal" hidden>
+  <div class="modal-box">
+    <button class="modal-x" id="irisClose" aria-label="Close">&times;</button>
+    <h3 data-t="modal_title"></h3>
+    <p class="modal-intro" data-t="modal_intro"></p>
+    <ol class="modal-steps" id="irisSteps"></ol>
+    <div class="note-modal" data-t="modal_note"></div>
+  </div>
+</div>
+
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="foot-grid">
@@ -268,7 +319,9 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
       <h4 data-t="foot_links"></h4>
       <a href="#how" data-t="foot_how"></a>
       <a href="#catalogue" data-t="foot_cat"></a>
-      <a href="#" data-t="foot_terms"></a>
+      <a href="#iris" data-t="foot_iris"></a>
+      <a href="conditions.html" data-t="foot_terms"></a>
+      <a href="confidentialite.html" data-t="foot_privacy"></a>
     </div>
   </div>
   <div class="foot-bottom">
@@ -382,6 +435,17 @@ var PRODUCTS = [
     price:{pln:139}, image:"" }
 ];
 
+/* --- Photos produits (réutilise la galerie du site B2C, comme le portail pro) --- */
+(function(){
+  var B="https://raw.githubusercontent.com/aleko-rgb/eyecu-irisphoto-site/main/images/";
+  var M={ "SS-1-16mm-0026":"Sofia_doubleSided_necklace","SS-1-16mm-0027":"Sofia_necklace_16mm",
+    "S925-2-12mm-0035":"Lila_silver","S925-2-12mm-0036":"Lila_goldPlated","SS-1-14mm-0034":"Sofia_ring",
+    "SS-1-16mm-0030":"Sofia_Bracelet1","SS-1-16mm-0032":"Sofia_Bracelet3","SS-1-16mm-0031":"Sofia_Bracelet2",
+    "SS-1-12mm-0028":"Sofia_earrings1","SS-1-12mm-0029":"Sofia_earrings2","SS-1-12mm-0033":"Sofia_cufflinks",
+    "Zn-3-25mm-0040":"KeyRing" };
+  PRODUCTS.forEach(function(p){ if(M[p.id]) p.image=B+M[p.id]+"_600.webp"; });
+})();
+
 /* --- Dictionnaire d'interface FR / EN / PL --- */
 var TR = {
   fr:{
@@ -404,7 +468,15 @@ var TR = {
     foot_contact:"Contact", foot_links:"Liens",
     foot_how:"Comment ça marche", foot_cat:"Catalogue", foot_terms:"Conditions générales",
     foot_made:"Façonné à Poznań, Pologne",
-    app_soon:"La personnalisation en ligne arrive très bientôt. En attendant, écrivez-nous sur WhatsApp : +48 532 622 171."
+    app_soon:"La personnalisation en ligne arrive très bientôt. En attendant, écrivez-nous sur WhatsApp : +48 532 622 171.",
+    foot_privacy:"Confidentialité", foot_iris:"Faire sa photo d'iris",
+    iris_eyebrow:"Faites-le vous-même", iris_title:"Photographiez votre iris au téléphone",
+    iris_sub:"Pas besoin de studio : avec un smartphone récent et un peu de méthode, capturez votre iris à la maison, puis sertissez-le sur le bijou de votre choix.",
+    iris_cta:"Voir le guide photo",
+    modal_title:"Votre iris au smartphone, pas à pas",
+    modal_intro:"Quelques minutes suffisent. Prenez votre temps et photographiez chaque œil séparément.",
+    modal_note:"Astuce : gardez vos 2–3 meilleures photos, nettes et bien contrastées. Les résultats varient selon le modèle de téléphone.",
+    iris_steps:["Pièce sombre, devant un miroir. Nettoyez l'objectif arrière.","Lumière LED ~5600K (CRI 95+), à 45° sur le côté de l'œil — jamais de face, pas de ring light.","La lumière vive rétrécit la pupille et révèle l'iris.","Appareil photo arrière, mode Photo, objectif 0,5× (ultra grand-angle).","Approchez lentement jusqu'à ~2 cm : le mode macro s'active (icône fleur).","Restez à 0,5× ou 1× — ne zoomez pas au-delà.","Touchez l'iris pour verrouiller mise au point et exposition, ajustez la luminosité.","Stabilisez-vous : coudes sur un plan, dos au mur, ou mini-trépied.","Déclenchez sans toucher : retardateur 3 s ou commande vocale.","Clignez 5–6 fois, ouvrez grand, max ~5 s par prise.","Prenez 10–15 photos par œil, gardez les meilleures.","À éviter : zoom >1×, cils/larmes, pupille trop sombre, reflets, caméra selfie."]
   },
   en:{
     hero_eyebrow:"Personalised photo jewellery",
@@ -426,7 +498,15 @@ var TR = {
     foot_contact:"Contact", foot_links:"Links",
     foot_how:"How it works", foot_cat:"Catalogue", foot_terms:"Terms & conditions",
     foot_made:"Crafted in Poznań, Poland",
-    app_soon:"Online personalisation is coming very soon. In the meantime, write to us on WhatsApp: +48 532 622 171."
+    app_soon:"Online personalisation is coming very soon. In the meantime, write to us on WhatsApp: +48 532 622 171.",
+    foot_privacy:"Privacy", foot_iris:"Photograph your iris",
+    iris_eyebrow:"Do it yourself", iris_title:"Photograph your iris with your phone",
+    iris_sub:"No studio needed: with a recent smartphone and a little method, capture your iris at home, then set it on the jewel of your choice.",
+    iris_cta:"See the photo guide",
+    modal_title:"Your iris on a smartphone, step by step",
+    modal_intro:"A few minutes is enough. Take your time and photograph each eye separately.",
+    modal_note:"Tip: keep your 2–3 best shots, sharp and well-contrasted. Results vary by phone model.",
+    iris_steps:["Dark room, in front of a mirror. Wipe the rear lens.","LED light ~5600K (CRI 95+), 45° to the side of the eye — never head-on, no ring light.","Bright light shrinks the pupil and reveals the iris.","Rear camera, Photo mode, 0.5× (ultra-wide) lens.","Move slowly to ~2 cm: macro mode kicks in (flower icon).","Stay at 0.5× or 1× — don't zoom beyond.","Tap the iris to lock focus and exposure, adjust brightness.","Brace yourself: elbows on a surface, head to a wall, or a mini tripod.","Shoot without touching: 3-sec timer or Voice Control.","Blink 5–6 times, open wide, max ~5 s per shot.","Take 10–15 photos per eye, keep the best.","Avoid: zoom >1×, lashes/tears, too-dark pupil, reflections, selfie camera."]
   },
   pl:{
     hero_eyebrow:"Spersonalizowana biżuteria ze zdjęciem",
@@ -448,7 +528,15 @@ var TR = {
     foot_contact:"Kontakt", foot_links:"Linki",
     foot_how:"Jak to działa", foot_cat:"Katalog", foot_terms:"Regulamin",
     foot_made:"Wykonano w Poznaniu, Polska",
-    app_soon:"Personalizacja online będzie dostępna wkrótce. Tymczasem napisz do nas na WhatsApp: +48 532 622 171."
+    app_soon:"Personalizacja online będzie dostępna wkrótce. Tymczasem napisz do nas na WhatsApp: +48 532 622 171.",
+    foot_privacy:"Prywatność", foot_iris:"Zrób zdjęcie tęczówki",
+    iris_eyebrow:"Zrób to sam", iris_title:"Sfotografuj tęczówkę telefonem",
+    iris_sub:"Studio niepotrzebne: nowszym smartfonem i odrobiną techniki uchwycisz tęczówkę w domu, a potem oprawisz ją w wybranej biżuterii.",
+    iris_cta:"Zobacz poradnik",
+    modal_title:"Tęczówka telefonem, krok po kroku",
+    modal_intro:"Wystarczy kilka minut. Nie spiesz się i fotografuj każde oko osobno.",
+    modal_note:"Wskazówka: zachowaj 2–3 najlepsze, ostre i kontrastowe ujęcia. Efekt zależy od modelu telefonu.",
+    iris_steps:["Ciemny pokój, przed lustrem. Przetrzyj tylny obiektyw.","Światło LED ~5600K (CRI 95+), pod 45° z boku oka — nigdy na wprost, bez ring light.","Jasne światło zwęża źrenicę i odsłania tęczówkę.","Tylny aparat, tryb Zdjęcie, obiektyw 0,5× (ultraszeroki).","Zbliżaj powoli do ~2 cm: włącza się tryb makro (ikona kwiatka).","Zostań na 0,5× lub 1× — nie zoomuj dalej.","Dotknij tęczówki, by zablokować ostrość i ekspozycję, ustaw jasność.","Ustabilizuj się: łokcie na blacie, głowa przy ścianie lub mini statyw.","Wyzwalaj bez dotykania: samowyzwalacz 3 s lub Sterowanie głosem.","Mrugnij 5–6 razy, otwórz szeroko, maks. ~5 s na ujęcie.","Zrób 10–15 zdjęć na oko, zachowaj najlepsze.","Unikaj: zoom >1×, rzęsy/łzy, zbyt ciemna źrenica, odbicia, aparat do selfie."]
   }
 };
 
@@ -496,6 +584,9 @@ function renderProducts(){
       '</div>'+
     '</article>';
   }).join('');
+  g.querySelectorAll('.product .ph img').forEach(function(im){
+    im.addEventListener('error',function(){ im.parentNode.innerHTML='<span class="mono">EYE C U</span>'; });
+  });
   g.querySelectorAll('button[data-id]').forEach(function(b){
     b.addEventListener('click',function(){ openApp(b.getAttribute('data-id')); });
   });
@@ -565,6 +656,18 @@ document.querySelectorAll('.cur button').forEach(function(b){
     applyCurrency();
   });
 });
+
+/* --- Pop-up guide iris --- */
+function buildIrisSteps(){
+  var ol=document.getElementById('irisSteps'); if(!ol) return;
+  var s=(TR[LANG]||TR.fr).iris_steps||[];
+  ol.innerHTML=s.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('');
+}
+var irisModal=document.getElementById('irisModal');
+document.getElementById('irisOpen').addEventListener('click',function(){ buildIrisSteps(); irisModal.hidden=false; });
+document.getElementById('irisClose').addEventListener('click',function(){ irisModal.hidden=true; });
+irisModal.addEventListener('click',function(e){ if(e.target===irisModal) irisModal.hidden=true; });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') irisModal.hidden=true; });
 
 applyAppLang();
 applyCurrency();
