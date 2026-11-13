@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>EYE C U Craft — Any photo, set in glass</title>
+<meta name="description" content="EYE C U Craft — appliquez n'importe quelle photo sur un bijou artisanal serti sous cabochon. Vous choisissez, vous cadrez, nous façonnons.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#0e0e0e; --paper:#ffffff; --bg:#f4f1ec;
+  --bordeaux:#6B1E2E; --bordeaux2:#7a2436;
+  --gold:#A9805A; --grey:#767676; --line:rgba(0,0,0,0.1);
+  --ok:#2e7d32; --err:#b3261e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:'Jost',-apple-system,Segoe UI,Arial,sans-serif;font-weight:400;
+  color:var(--ink);background:var(--paper);line-height:1.7;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:500;margin:0}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+a:focus-visible,button:focus-visible{outline:2px solid var(--bordeaux);outline-offset:3px}
+
+/* ---------- TOPBAR ---------- */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:linear-gradient(180deg,var(--bordeaux2),var(--bordeaux));
+  box-shadow:0 2px 14px rgba(107,30,46,.22);
+}
+.topbar-inner{
+  max-width:1200px;margin:0 auto;padding:0 6vw;height:64px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.brand{display:flex;align-items:center;gap:12px;color:#fff}
+.brand img{height:34px}
+.brand .wordmark{
+  font-family:'Jost',sans-serif;font-weight:500;letter-spacing:.28em;font-size:.82rem;
+  text-transform:uppercase;color:#fff;white-space:nowrap;
+}
+.brand .craft{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
+  letter-spacing:.02em;font-size:1.05rem;color:#f0d9b8;margin-left:2px;
+}
+.controls{display:flex;align-items:center;gap:12px}
+.controls .sep{width:1px;height:20px;background:rgba(255,255,255,.28)}
+.lang,.cur{display:flex;gap:6px}
+.lang button,.cur button{
+  background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;
+  font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:.06em;
+  padding:5px 9px;border-radius:16px;cursor:pointer;transition:background .15s,border-color .15s;
+  min-width:30px;
+}
+.lang button:hover,.cur button:hover{border-color:#fff}
+.lang button.on,.cur button.on{background:#fff;color:var(--bordeaux);border-color:#fff}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;min-height:84vh;display:flex;align-items:center;
+  color:#fff;overflow:hidden;
+  /* Remplace par une vraie photo : background-image: url('TON_URL'); */
+  background:
+    radial-gradient(120% 80% at 20% 10%, rgba(169,128,90,.25), transparent 55%),
+    linear-gradient(145deg,#1a0a0e 0%,#3a1018 42%,#1c0b10 100%);
+  background-size:cover;background-position:center;
+}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,5,6,.25),rgba(10,5,6,.6))}
+.hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 6vw;width:100%}
+.hero .eyebrow{
+  font-family:'Jost',sans-serif;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:1.4rem;
+}
+.hero .eyebrow::before{content:'';width:34px;height:1px;background:var(--gold)}
+.hero h1{font-size:clamp(2.4rem,6.5vw,4.8rem);line-height:1.04;max-width:16ch;margin-bottom:.4em;text-wrap:balance}
+.hero h1 em{font-style:italic;color:#f0d9b8}
+.hero p{font-weight:300;font-size:clamp(1rem,2vw,1.2rem);max-width:46ch;color:rgba(255,255,255,.88);margin-bottom:2.2rem}
+.hero .cta-row{display:flex;flex-wrap:wrap;gap:14px}
+
+/* ---------- BUTTONS ---------- */
+.btn{
+  display:inline-block;border:none;border-radius:2px;padding:14px 26px;cursor:pointer;
+  font-family:'Jost',sans-serif;font-size:13px;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;transition:transform .12s,box-shadow .12s,background .15s,color .15s;
+}
+.btn-solid{background:var(--bordeaux);color:#fff}
+.btn-solid:hover{background:var(--bordeaux2);transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid currentColor;color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{filter:brightness(1.05);transform:translateY(-1px)}
+
+/* ---------- SECTION ---------- */
+section.block{padding:5.5rem 6vw}
+.container{max-width:1200px;margin:0 auto}
+.section-head{max-width:640px;margin:0 auto 3rem;text-align:center}
+.eyebrow{
+  font-family:'Jost',sans-serif;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--bordeaux);margin-bottom:1rem;display:inline-flex;align-items:center;gap:12px;
+}
+.eyebrow::before,.eyebrow::after{content:'';width:24px;height:1px;background:var(--bordeaux)}
+.section-head h2{font-size:clamp(2rem,4vw,2.9rem);line-height:1.1;color:var(--ink);margin-bottom:.3em;text-wrap:balance}
+.section-head p{color:var(--grey);font-weight:300;max-width:52ch;margin:.6rem auto 0}
+
+/* ---------- HOW IT WORKS ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;max-width:1000px;margin:0 auto}
+.step{text-align:center}
+.step .num{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:2.6rem;color:var(--gold);line-height:1}
+.step h3{font-size:1.45rem;color:var(--bordeaux);margin:.5rem 0 .4rem}
+.step p{color:var(--grey);font-weight:300;font-size:.95rem;max-width:30ch;margin:0 auto}
+
+/* ---------- CATALOGUE ---------- */
+.cat{background:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1120px;margin:0 auto}
+.product{
+  background:var(--paper);border:1px solid var(--line);border-radius:2px;overflow:hidden;
+  display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(14,14,14,.045);
+  transition:transform .18s,box-shadow .18s;
+}
+.product:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(14,14,14,.1)}
+.product .ph{
+  aspect-ratio:4/3;background:
+    radial-gradient(130% 100% at 30% 20%, rgba(169,128,90,.22), transparent 60%),
+    linear-gradient(160deg,#efe7dc,#e3d7c6);
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+.product .ph img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.product .ph .mono{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2.4rem;color:var(--bordeaux);opacity:.5;
+}
+.product .body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1}
+.product .collection{
+  font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:6px;
+}
+.product h3{font-size:1.4rem;color:var(--ink);margin-bottom:4px;line-height:1.15}
+.product .desc{color:var(--grey);font-weight:300;font-size:.88rem;margin-bottom:14px;flex:1}
+.product .foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto}
+.product .price{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:1.5rem;color:var(--gold);white-space:nowrap}
+.product .btn{padding:11px 18px;font-size:12px}
+.product .btn-solid{color:#fff}
+
+/* ---------- REASSURANCE ---------- */
+.marks{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:960px;margin:0 auto}
+.mark{text-align:center;padding:0 10px}
+.mark .ic{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.8rem;color:var(--bordeaux)}
+.mark h3{font-size:1.15rem;margin:.3rem 0 .3rem;color:var(--ink)}
+.mark p{color:var(--grey);font-weight:300;font-size:.9rem;margin:0}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem}
+.foot-grid{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:40px}
+.foot-brand .wordmark{font-family:'Jost',sans-serif;font-weight:500;letter-spacing:.28em;font-size:.9rem;color:#fff;text-transform:uppercase}
+.foot-brand p{font-weight:300;font-size:.88rem;max-width:34ch;margin:.8rem 0 0;color:rgba(255,255,255,.6)}
+.foot-col h4{font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 .9rem;font-weight:500}
+.foot-col a,.foot-col span{display:block;font-weight:300;font-size:.9rem;color:rgba(255,255,255,.72);margin-bottom:.5rem;transition:color .15s}
+.foot-col a:hover{color:#fff}
+.foot-bottom{max-width:1200px;margin:2.6rem auto 0;padding-top:1.6rem;border-top:1px solid rgba(255,255,255,.12);
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:.78rem;color:rgba(255,255,255,.45)}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:900px){
+  .steps{grid-template-columns:1fr;gap:36px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .marks{grid-template-columns:1fr;gap:30px}
+}
+@media(max-width:620px){
+  .grid{grid-template-columns:1fr}
+  .brand .wordmark{display:none}
+  .topbar-inner{padding:0 5vw}
+  section.block{padding:4rem 5vw}
+}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<!-- ============ TOPBAR ============ -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top" aria-label="EYE C U Craft">
+      <img data-logo alt="EYE C U Iris Photo">
+      <span class="wordmark">EYE C U<span class="craft">Craft</span></span>
+    </a>
+    <div class="controls">
+      <nav class="cur" aria-label="Currency">
+        <button data-cur="pln" class="on">z&#322;</button>
+        <button data-cur="eur">&euro;</button>
+      </nav>
+      <span class="sep"></span>
+      <nav class="lang" aria-label="Language">
+        <button data-lang="fr" class="on">FR</button>
+        <button data-lang="en">EN</button>
+        <button data-lang="pl">PL</button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<a id="top"></a>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow" data-t="hero_eyebrow"></div>
+    <h1 data-t="hero_title"></h1>
+    <p data-t="hero_sub"></p>
+    <div class="cta-row">
+      <a href="#catalogue" class="btn btn-gold" data-t="hero_cta1"></a>
+      <a href="#how" class="btn btn-ghost" data-t="hero_cta2"></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="block" id="how">
+  <div class="section-head">
+    <div class="eyebrow" data-t="how_eyebrow"></div>
+    <h2 data-t="how_title"></h2>
+    <p data-t="how_sub"></p>
+  </div>
+  <div class="steps container">
+    <div class="step"><div class="num">01</div><h3 data-t="step1_t"></h3><p data-t="step1_p"></p></div>
+    <div class="step"><div class="num">02</div><h3 data-t="step2_t"></h3><p data-t="step2_p"></p></div>
+    <div class="step"><div class="num">03</div><h3 data-t="step3_t"></h3><p data-t="step3_p"></p></div>
+  </div>
+</section>
+
+<!-- ============ CATALOGUE ============ -->
+<section class="block cat" id="catalogue">
+  <div class="section-head">
+    <div class="eyebrow" data-t="cat_eyebrow"></div>
+    <h2 data-t="cat_title"></h2>
+    <p data-t="cat_sub"></p>
+  </div>
+  <div class="grid container" id="productGrid"><!-- rendu par JS --></div>
+</section>
+
+<!-- ============ REASSURANCE ============ -->
+<section class="block">
+  <div class="marks container">
+    <div class="mark"><div class="ic">·</div><h3 data-t="m1_t"></h3><p data-t="m1_p"></p></div>
+    <div class="mark"><div class="ic">·</div><h3 data-t="m2_t"></h3><p data-t="m2_p"></p></div>
+    <div class="mark"><div class="ic">·</div><h3 data-t="m3_t"></h3><p data-t="m3_p"></p></div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="wordmark">EYE C U</div>
+      <p data-t="foot_tag"></p>
+    </div>
+    <div class="foot-col">
+      <h4 data-t="foot_contact"></h4>
+      <a href="https://wa.me/48532622171" target="_blank" rel="noopener">WhatsApp +48 532 622 171</a>
+      <a href="mailto:poznan@eyecu-irisphoto.com">poznan@eyecu-irisphoto.com</a>
+      <a href="https://www.eyecuirisphoto.com" target="_blank" rel="noopener">www.eyecuirisphoto.com</a>
+    </div>
+    <div class="foot-col">
+      <h4 data-t="foot_links"></h4>
+      <a href="#how" data-t="foot_how"></a>
+      <a href="#catalogue" data-t="foot_cat"></a>
+      <a href="#" data-t="foot_terms"></a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© <span id="year"></span> EYE C U Iris Photo®</span>
+    <span data-t="foot_made"></span>
+  </div>
+</footer>
+
+<script>
+/* =======================================================================
+   EYE C U Craft — vitrine statique (GitHub Pages)
+   -----------------------------------------------------------------------
+   Prix issus du Sheet Pricing, tier = B2C_2 (TTC, PLN). SKU = product_id.
+   À RÉGLER :
+   - APP_URL     → URL de la web app Apps Script (étape 2). Vide pour l'instant.
+   - FX_EUR_PLN  → taux indicatif pour l'affichage "~ € " (aucun prix EUR figé
+                   dans le tier B2C_2). Pour des prix EUR exacts, ajouter
+                   price:{pln:269, eur:65} sur le produit voulu.
+   - image:""    → mettre l'URL de la photo produit (sinon visuel placeholder).
+   ======================================================================= */
+
+var LOGO_URL   = "https://raw.githubusercontent.com/aleko-rgb/eyecu-pro-site/main/images/logo-v2.png";
+var APP_URL    = "";        // URL /exec de la web app Apps Script. Sert l'app de perso
+                            // ET le catalogue (?api=catalog). ex: "https://script.google.com/macros/s/XXXX/exec"
+var FX_EUR_PLN = 4.30;      // taux PLN->EUR indicatif pour l'affichage
+
+var CURRENCIES = {
+  pln:{ sym:"zł", loc:"pl-PL" },  // zł — marché principal
+  eur:{ sym:"€",  loc:"fr-FR" }   // €  — affichage converti (~) sauf prix EUR figé
+};
+var DEFAULT_CUR = "pln";
+
+/* Collections */
+var COL_SOFIA = {fr:"Sofia · Acier",      en:"Sofia · Steel",     pl:"Sofia · Stal"};
+var COL_LILA  = {fr:"Lila · Argent 925",  en:"Lila · 925 Silver", pl:"Lila · Srebro 925"};
+var COL_ACC   = {fr:"Accessoire · Acier", en:"Accessory · Steel", pl:"Akcesorium · Stal"};
+
+/* --- Catalogue : tier B2C_2, prix TTC PLN. id = product_id (SKU réel). --- */
+var PRODUCTS = [
+  { id:"SS-1-16mm-0026", collection:COL_SOFIA,
+    name:{fr:"Collier Sofia double face",en:"Sofia two-sided necklace",pl:"Naszyjnik Sofia dwustronny"},
+    desc:{fr:"Collier double face, cabochon 16 mm sur acier — une photo de chaque côté.",
+          en:"Two-sided necklace, 16 mm cabochon on steel — one photo on each side.",
+          pl:"Naszyjnik dwustronny, kaboszon 16 mm na stali — zdjęcie po każdej stronie."},
+    price:{pln:269}, image:"" },
+  { id:"SS-1-16mm-0027", collection:COL_SOFIA,
+    name:{fr:"Collier Sofia une face",en:"Sofia one-sided necklace",pl:"Naszyjnik Sofia jednostronny"},
+    desc:{fr:"Collier une face, cabochon 16 mm sur acier, chaîne incluse.",
+          en:"One-sided necklace, 16 mm cabochon on steel, chain included.",
+          pl:"Naszyjnik jednostronny, kaboszon 16 mm na stali, łańcuszek w zestawie."},
+    price:{pln:239}, image:"" },
+  { id:"S925-2-12mm-0035", collection:COL_LILA,
+    name:{fr:"Collier Lila argent 925",en:"Lila silver necklace",pl:"Naszyjnik Lila srebro 925"},
+    desc:{fr:"Collier Lila, cabochon 12 mm serti sur argent massif 925.",
+          en:"Lila necklace, 12 mm cabochon set on solid 925 silver.",
+          pl:"Naszyjnik Lila, kaboszon 12 mm na litym srebrze 925."},
+    price:{pln:449}, image:"" },
+  { id:"S925-2-12mm-0036", collection:COL_LILA,
+    name:{fr:"Collier Lila plaqué or",en:"Lila gold-plated necklace",pl:"Naszyjnik Lila pozłacany"},
+    desc:{fr:"Collier Lila, cabochon 12 mm sur argent 925 plaqué or.",
+          en:"Lila necklace, 12 mm cabochon on gold-plated 925 silver.",
+          pl:"Naszyjnik Lila, kaboszon 12 mm na pozłacanym srebrze 925."},
+    price:{pln:529}, image:"" },
+  { id:"SS-1-14mm-0034", collection:COL_SOFIA,
+    name:{fr:"Bague Sofia",en:"Sofia ring",pl:"Pierścionek Sofia"},
+    desc:{fr:"Bague réglable, cabochon 14 mm sur acier.",
+          en:"Adjustable ring, 14 mm cabochon on steel.",
+          pl:"Regulowany pierścionek, kaboszon 14 mm na stali."},
+    price:{pln:169}, image:"" },
+  { id:"SS-1-16mm-0030", collection:COL_SOFIA,
+    name:{fr:"Bracelet Sofia n°1",en:"Sofia bracelet no.1",pl:"Bransoletka Sofia nr 1"},
+    desc:{fr:"Bracelet jonc, cabochon 16 mm sur acier.",
+          en:"Bangle bracelet, 16 mm cabochon on steel.",
+          pl:"Bransoletka, kaboszon 16 mm na stali."},
+    price:{pln:239}, image:"" },
+  { id:"SS-1-16mm-0032", collection:COL_SOFIA,
+    name:{fr:"Bracelet Sofia n°3",en:"Sofia bracelet no.3",pl:"Bransoletka Sofia nr 3"},
+    desc:{fr:"Bracelet n°3, cabochon 16 mm sur acier.",
+          en:"Bracelet no.3, 16 mm cabochon on steel.",
+          pl:"Bransoletka nr 3, kaboszon 16 mm na stali."},
+    price:{pln:239}, image:"" },
+  { id:"SS-1-16mm-0031", collection:COL_SOFIA,
+    name:{fr:"Bracelet Sofia cuir noir n°2",en:"Sofia black leather bracelet no.2",pl:"Bransoletka Sofia skórzana czarna nr 2"},
+    desc:{fr:"Bracelet cuir noir, cabochon 16 mm sur acier.",
+          en:"Black leather bracelet, 16 mm cabochon on steel.",
+          pl:"Bransoletka skórzana czarna, kaboszon 16 mm na stali."},
+    price:{pln:299}, image:"" },
+  { id:"SS-1-12mm-0028", collection:COL_SOFIA,
+    name:{fr:"Boucles d'oreilles Sofia n°1",en:"Sofia earrings no.1",pl:"Kolczyki Sofia nr 1"},
+    desc:{fr:"Boucles d'oreilles n°1, cabochon 12 mm sur acier.",
+          en:"Earrings no.1, 12 mm cabochon on steel.",
+          pl:"Kolczyki nr 1, kaboszon 12 mm na stali."},
+    price:{pln:169}, image:"" },
+  { id:"SS-1-12mm-0029", collection:COL_SOFIA,
+    name:{fr:"Boucles d'oreilles Sofia n°2",en:"Sofia earrings no.2",pl:"Kolczyki Sofia nr 2"},
+    desc:{fr:"Boucles d'oreilles n°2, cabochon 12 mm sur acier.",
+          en:"Earrings no.2, 12 mm cabochon on steel.",
+          pl:"Kolczyki nr 2, kaboszon 12 mm na stali."},
+    price:{pln:169}, image:"" },
+  { id:"SS-1-12mm-0033", collection:COL_SOFIA,
+    name:{fr:"Boutons de manchette Sofia",en:"Sofia cufflinks",pl:"Spinki do mankietów Sofia"},
+    desc:{fr:"Paire de boutons de manchette, cabochon 12 mm sur acier.",
+          en:"Pair of cufflinks, 12 mm cabochon on steel.",
+          pl:"Para spinek do mankietów, kaboszon 12 mm na stali."},
+    price:{pln:169}, image:"" },
+  { id:"Zn-3-25mm-0040", collection:COL_ACC,
+    name:{fr:"Porte-clés argenté",en:"Silver-colour key ring",pl:"Brelok srebrny"},
+    desc:{fr:"Porte-clés, cabochon 25 mm, finition argentée.",
+          en:"Key ring, 25 mm cabochon, silver finish.",
+          pl:"Brelok, kaboszon 25 mm, srebrne wykończenie."},
+    price:{pln:139}, image:"" }
+];
+
+/* --- Dictionnaire d'interface FR / EN / PL --- */
+var TR = {
+  fr:{
+    hero_eyebrow:"Bijoux photo personnalisés",
+    hero_title:"Chaque photo, <em>sertie sous verre</em>.",
+    hero_sub:"Choisissez votre bijou, déposez votre image — un visage, un animal, un paysage — cadrez-la dans le cercle, et nous la façonnons à la main.",
+    hero_cta1:"Voir le catalogue", hero_cta2:"Comment ça marche",
+    how_eyebrow:"Trois étapes", how_title:"Simple, de la photo au bijou",
+    how_sub:"Pas de compte, pas de prise de vue. Vous gardez la main du début à la fin.",
+    step1_t:"Choisissez le bijou", step1_p:"Collier, bague, bracelet — acier ou argent 925.",
+    step2_t:"Déposez votre photo", step2_p:"N'importe quelle image. Vous la cadrez dans le cercle.",
+    step3_t:"Nous la façonnons", step3_p:"Sertissage artisanal sous cabochon, expédié chez vous.",
+    cat_eyebrow:"Le catalogue", cat_title:"Choisissez votre pièce",
+    cat_sub:"Tous les prix sont TTC. La personnalisation se fait à l'étape suivante.",
+    personalize:"Personnaliser",
+    m1_t:"Fait main à Poznań", m1_p:"Chaque pièce est sertie à la main, une par une.",
+    m2_t:"Votre image, la vôtre", m2_p:"Aucune prise de vue imposée : vous apportez la photo.",
+    m3_t:"Argent 925 & acier", m3_p:"Deux collections, du quotidien au précieux.",
+    foot_tag:"Bijoux photo artisanaux — EYE C U Iris Photo®, Poznań.",
+    foot_contact:"Contact", foot_links:"Liens",
+    foot_how:"Comment ça marche", foot_cat:"Catalogue", foot_terms:"Conditions générales",
+    foot_made:"Façonné à Poznań, Pologne",
+    app_soon:"La personnalisation en ligne arrive très bientôt. En attendant, écrivez-nous sur WhatsApp : +48 532 622 171."
+  },
+  en:{
+    hero_eyebrow:"Personalised photo jewellery",
+    hero_title:"Every photo, <em>set in glass</em>.",
+    hero_sub:"Pick your piece, add your image — a face, a pet, a landscape — frame it in the circle, and we craft it by hand.",
+    hero_cta1:"View the catalogue", hero_cta2:"How it works",
+    how_eyebrow:"Three steps", how_title:"Simple, from photo to jewel",
+    how_sub:"No account, no photo shoot. You stay in control from start to finish.",
+    step1_t:"Choose the piece", step1_p:"Necklace, ring, bracelet — steel or 925 silver.",
+    step2_t:"Add your photo", step2_p:"Any image. You frame it inside the circle.",
+    step3_t:"We craft it", step3_p:"Hand-set under a glass cabochon, shipped to you.",
+    cat_eyebrow:"The catalogue", cat_title:"Choose your piece",
+    cat_sub:"All prices include tax. Personalisation happens at the next step.",
+    personalize:"Personalise",
+    m1_t:"Handmade in Poznań", m1_p:"Every piece is set by hand, one at a time.",
+    m2_t:"Your image, yours", m2_p:"No imposed shoot — you bring the photo.",
+    m3_t:"925 silver & steel", m3_p:"Two collections, from everyday to precious.",
+    foot_tag:"Handcrafted photo jewellery — EYE C U Iris Photo®, Poznań.",
+    foot_contact:"Contact", foot_links:"Links",
+    foot_how:"How it works", foot_cat:"Catalogue", foot_terms:"Terms & conditions",
+    foot_made:"Crafted in Poznań, Poland",
+    app_soon:"Online personalisation is coming very soon. In the meantime, write to us on WhatsApp: +48 532 622 171."
+  },
+  pl:{
+    hero_eyebrow:"Spersonalizowana biżuteria ze zdjęciem",
+    hero_title:"Każde zdjęcie, <em>oprawione w szkle</em>.",
+    hero_sub:"Wybierz biżuterię, dodaj swoje zdjęcie — twarz, zwierzę, krajobraz — wykadruj je w kole, a my wykonamy je ręcznie.",
+    hero_cta1:"Zobacz katalog", hero_cta2:"Jak to działa",
+    how_eyebrow:"Trzy kroki", how_title:"Prosto, od zdjęcia do biżuterii",
+    how_sub:"Bez konta, bez sesji zdjęciowej. Ty decydujesz od początku do końca.",
+    step1_t:"Wybierz biżuterię", step1_p:"Naszyjnik, pierścionek, bransoletka — stal lub srebro 925.",
+    step2_t:"Dodaj zdjęcie", step2_p:"Dowolny obraz. Kadrujesz go w kole.",
+    step3_t:"My to wykonamy", step3_p:"Ręczna oprawa pod kaboszonem, wysyłka do Ciebie.",
+    cat_eyebrow:"Katalog", cat_title:"Wybierz swoją biżuterię",
+    cat_sub:"Wszystkie ceny zawierają podatek. Personalizacja w kolejnym kroku.",
+    personalize:"Personalizuj",
+    m1_t:"Ręcznie w Poznaniu", m1_p:"Każda sztuka oprawiana ręcznie, pojedynczo.",
+    m2_t:"Twoje zdjęcie", m2_p:"Żadnej narzuconej sesji — przynosisz zdjęcie.",
+    m3_t:"Srebro 925 i stal", m3_p:"Dwie kolekcje, od codziennej po wyjątkową.",
+    foot_tag:"Ręcznie robiona biżuteria ze zdjęciem — EYE C U Iris Photo®, Poznań.",
+    foot_contact:"Kontakt", foot_links:"Linki",
+    foot_how:"Jak to działa", foot_cat:"Katalog", foot_terms:"Regulamin",
+    foot_made:"Wykonano w Poznaniu, Polska",
+    app_soon:"Personalizacja online będzie dostępna wkrótce. Tymczasem napisz do nas na WhatsApp: +48 532 622 171."
+  }
+};
+
+/* --- Helpers --- */
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+
+/* Prix : utilise le prix de la devise s'il existe, sinon convertit (indicatif ~). */
+function priceIn(p,cur){
+  if(p.price[cur]!=null) return {v:p.price[cur],approx:false};
+  if(cur==='eur' && p.price.pln!=null) return {v:Math.round(p.price.pln/FX_EUR_PLN),approx:true};
+  if(cur==='pln' && p.price.eur!=null) return {v:Math.round(p.price.eur*FX_EUR_PLN),approx:true};
+  return {v:null,approx:false};
+}
+function fmtPrice(p){
+  var c=CURRENCIES[CUR], r=priceIn(p,CUR);
+  if(r.v==null) return "";
+  return (r.approx?"~ ":"") + r.v.toLocaleString(c.loc) + " " + c.sym;
+}
+
+/* --- État : langue + devise (mémorisés) --- */
+var LANG = "fr";
+var CUR  = DEFAULT_CUR;
+try{ var sl=localStorage.getItem('craft_lang'); if(sl&&TR[sl]) LANG=sl; }catch(e){}
+try{ var sc=localStorage.getItem('craft_cur');  if(sc&&CURRENCIES[sc]) CUR=sc; }catch(e){}
+
+/* --- Rendu du catalogue --- */
+function renderProducts(){
+  var g=document.getElementById('productGrid');
+  g.innerHTML = PRODUCTS.map(function(p){
+    var visual = p.image
+      ? '<img src="'+esc(p.image)+'" alt="'+esc(p.name[LANG])+'">'
+      : '<span class="mono">EYE C U</span>';
+    return ''+
+    '<article class="product">'+
+      '<div class="ph">'+visual+'</div>'+
+      '<div class="body">'+
+        '<div class="collection">'+esc(p.collection[LANG])+'</div>'+
+        '<h3>'+esc(p.name[LANG])+'</h3>'+
+        '<p class="desc">'+esc(p.desc[LANG])+'</p>'+
+        '<div class="foot">'+
+          '<span class="price">'+fmtPrice(p)+'</span>'+
+          '<button class="btn btn-solid" data-id="'+esc(p.id)+'">'+esc(TR[LANG].personalize)+'</button>'+
+        '</div>'+
+      '</div>'+
+    '</article>';
+  }).join('');
+  g.querySelectorAll('button[data-id]').forEach(function(b){
+    b.addEventListener('click',function(){ openApp(b.getAttribute('data-id')); });
+  });
+}
+
+/* --- Ouverture de l'app (étape 2). Tant que APP_URL est vide : message. --- */
+function openApp(productId){
+  if(!APP_URL){ alert(TR[LANG].app_soon); return; }
+  window.location.href = APP_URL + (APP_URL.indexOf('?')>-1?'&':'?') +
+    "product=" + encodeURIComponent(productId) +
+    "&lang=" + LANG + "&cur=" + CUR;
+}
+
+/* --- Application de la langue à tout le DOM --- */
+function applyAppLang(){
+  var d=TR[LANG];
+  document.querySelectorAll('[data-t]').forEach(function(el){
+    var k=el.getAttribute('data-t'); if(d[k]!=null) el.innerHTML=d[k];
+  });
+  document.documentElement.lang=LANG;
+  document.querySelectorAll('.lang button').forEach(function(b){
+    b.classList.toggle('on', b.getAttribute('data-lang')===LANG);
+  });
+  renderProducts();
+}
+
+/* --- Application de la devise --- */
+function applyCurrency(){
+  document.querySelectorAll('.cur button').forEach(function(b){
+    b.classList.toggle('on', b.getAttribute('data-cur')===CUR);
+  });
+  renderProducts();
+}
+
+/* --- Catalogue live : lit le Sheet (tier B2C_2) via l'Apps Script, en JSONP.
+      Si APP_URL est vide ou l'API injoignable => on garde le catalogue en dur. --- */
+function loadCatalog(){
+  if(!APP_URL) return;
+  var cb='__craftCat_'+Date.now();
+  var s=document.createElement('script');
+  window[cb]=function(data){
+    try{
+      if(data && data.products && data.products.length){ PRODUCTS=data.products; renderProducts(); }
+    }catch(e){}
+    delete window[cb]; if(s.parentNode) s.parentNode.removeChild(s);
+  };
+  s.onerror=function(){ delete window[cb]; if(s.parentNode) s.parentNode.removeChild(s); };
+  s.src=APP_URL+(APP_URL.indexOf('?')>-1?'&':'?')+"api=catalog&tier=B2C_2&callback="+cb;
+  document.body.appendChild(s);
+}
+
+/* --- Init --- */
+document.querySelectorAll('[data-logo]').forEach(function(img){ img.src=LOGO_URL; });
+document.getElementById('year').textContent = new Date().getFullYear();
+
+document.querySelectorAll('.lang button').forEach(function(b){
+  b.addEventListener('click',function(){
+    LANG=b.getAttribute('data-lang');
+    try{ localStorage.setItem('craft_lang',LANG); }catch(e){}
+    applyAppLang();
+  });
+});
+document.querySelectorAll('.cur button').forEach(function(b){
+  b.addEventListener('click',function(){
+    CUR=b.getAttribute('data-cur');
+    try{ localStorage.setItem('craft_cur',CUR); }catch(e){}
+    applyCurrency();
+  });
+});
+
+applyAppLang();
+applyCurrency();
+loadCatalog();   // catalogue live depuis le Sheet (via Apps Script) ; sinon catalogue en dur
+</script>
+</body>
+</html>
