@@ -16,11 +16,11 @@
 <meta property="og:site_name" content="EYE C U Craft">
 <meta property="og:title" content="Bijoux photo personnalisés — EYE C U Craft">
 <meta property="og:description" content="N'importe quelle photo, sertie sous verre. Bijou personnalisé fait main, livraison dans presque toute l'Europe.">
-<meta property="og:image" content="https://pro.eye-c-u.eu/images/gallery-2.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/aleko-rgb/eyecu-pro-site/main/images/gallery-4.jpg">
 <meta property="og:url" content="https://craft.eye-c-u.eu/">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Store","name":"EYE C U Craft","image":"https://pro.eye-c-u.eu/images/gallery-2.jpg","description":"Bijoux photo personnalisés sertis sous cabochon de verre, faits main à Poznań.","url":"https://craft.eye-c-u.eu/","telephone":"+48532622171","email":"poznan@eyecu-irisphoto.com","address":{"@type":"PostalAddress","addressLocality":"Poznań","addressCountry":"PL"},"areaServed":{"@type":"Place","name":"Europe"},"brand":{"@type":"Brand","name":"EYE C U Iris Photo"}}
+{"@context":"https://schema.org","@type":"Store","name":"EYE C U Craft","image":"https://raw.githubusercontent.com/aleko-rgb/eyecu-pro-site/main/images/gallery-4.jpg","description":"Bijoux photo personnalisés sertis sous cabochon de verre, faits main à Poznań.","url":"https://craft.eye-c-u.eu/","telephone":"+48532622171","email":"poznan@eyecu-irisphoto.com","address":{"@type":"PostalAddress","addressLocality":"Poznań","addressCountry":"PL"},"areaServed":{"@type":"Place","name":"Europe"},"brand":{"@type":"Brand","name":"EYE C U Iris Photo"}}
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,7 +87,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--bordeaux);outline-o
   /* Photo de présentation reprise du site pro — change l'URL pour une autre image. */
   background:
     linear-gradient(180deg,rgba(10,5,6,.42),rgba(10,5,6,.70)),
-    url('https://pro.eye-c-u.eu/images/gallery-2.jpg') center/cover no-repeat,
+    url('https://raw.githubusercontent.com/aleko-rgb/eyecu-pro-site/main/images/gallery-4.jpg') center/cover no-repeat,
     linear-gradient(145deg,#1a0a0e 0%,#3a1018 42%,#1c0b10 100%);
   background-size:cover;background-position:center;
 }
@@ -148,16 +148,15 @@ section.block{padding:5.5rem 6vw}
   transition:transform .18s,box-shadow .18s;
 }
 .product:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(14,14,14,.1)}
-.product .ph{
-  aspect-ratio:4/3;background:
-    radial-gradient(130% 100% at 30% 20%, rgba(169,128,90,.22), transparent 60%),
-    linear-gradient(160deg,#efe7dc,#e3d7c6);
-  display:flex;align-items:center;justify-content:center;position:relative;
-}
-.product .ph img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-.product .ph .mono{
-  font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2.4rem;color:var(--bordeaux);opacity:.5;
-}
+.product .ph{aspect-ratio:1/1;position:relative;overflow:hidden;background:#f4f1ec}
+.product .track{display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none}
+.product .track::-webkit-scrollbar{display:none}
+.product .slide{flex:0 0 100%;height:100%;scroll-snap-align:center;display:flex;align-items:center;justify-content:center}
+.product .slide img{width:100%;height:100%;object-fit:contain}
+.product .ph .mono{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2.4rem;color:var(--bordeaux);opacity:.5}
+.product .dots{position:absolute;bottom:9px;left:0;right:0;display:flex;gap:6px;justify-content:center;pointer-events:none}
+.product .dots span{width:6px;height:6px;border-radius:50%;background:rgba(14,14,14,.22);transition:background .15s}
+.product .dots span.on{background:var(--bordeaux)}
 .product .body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1}
 .product .collection{
   font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
@@ -446,12 +445,18 @@ var PRODUCTS = [
 /* --- Photos produits (réutilise la galerie du site B2C, comme le portail pro) --- */
 (function(){
   var B="https://raw.githubusercontent.com/aleko-rgb/eyecu-irisphoto-site/main/images/";
-  var M={ "SS-1-16mm-0026":"Sofia_doubleSided_necklace","SS-1-16mm-0027":"Sofia_necklace_16mm",
-    "S925-2-12mm-0035":"Lila_silver","S925-2-12mm-0036":"Lila_goldPlated","SS-1-14mm-0034":"Sofia_ring",
-    "SS-1-16mm-0030":"Sofia_Bracelet1","SS-1-16mm-0032":"Sofia_Bracelet3","SS-1-16mm-0031":"Sofia_Bracelet2",
-    "SS-1-12mm-0028":"Sofia_earrings1","SS-1-12mm-0029":"Sofia_earrings2","SS-1-12mm-0033":"Sofia_cufflinks",
-    "Zn-3-25mm-0040":"KeyRing" };
-  PRODUCTS.forEach(function(p){ if(M[p.id]) p.image=B+M[p.id]+"_600.webp"; });
+  var M={
+    "SS-1-16mm-0026":["Sofia_doubleSided_necklace","Sofia_doubleSided_necklace_2","Sofia_doubleSided_necklace_3"],
+    "SS-1-16mm-0027":["Sofia_necklace_16mm","Sofia_necklace_2_16mm"],
+    "S925-2-12mm-0035":["Lila_silver"],"S925-2-12mm-0036":["Lila_goldPlated"],
+    "SS-1-14mm-0034":["Sofia_ring","Sofia_ring_2"],
+    "SS-1-16mm-0030":["Sofia_Bracelet1","Sofia_Bracelet1_2"],
+    "SS-1-16mm-0032":["Sofia_Bracelet3","Sofia_Bracelet3_2"],
+    "SS-1-16mm-0031":["Sofia_Bracelet2","Sofia_Bracelet2_2"],
+    "SS-1-12mm-0028":["Sofia_earrings1","Sofia_earrings1_2"],
+    "SS-1-12mm-0029":["Sofia_earrings2","Sofia_earrings2_2"],
+    "SS-1-12mm-0033":["Sofia_cufflinks"],"Zn-3-25mm-0040":["KeyRing"] };
+  PRODUCTS.forEach(function(p){ if(M[p.id]){ p.photos=M[p.id].map(function(b){return B+b+"_600.webp";}); p.image=p.photos[0]; } });
 })();
 
 /* --- Dictionnaire d'interface FR / EN / PL --- */
@@ -575,12 +580,16 @@ try{ var sc=localStorage.getItem('craft_cur');  if(sc&&CURRENCIES[sc]) CUR=sc; }
 function renderProducts(){
   var g=document.getElementById('productGrid');
   g.innerHTML = PRODUCTS.map(function(p){
-    var visual = p.image
-      ? '<img src="'+esc(p.image)+'" alt="'+esc(p.name[LANG])+'">'
-      : '<span class="mono">EYE C U</span>';
+    var photos = (p.photos&&p.photos.length)?p.photos:(p.image?[p.image]:[]);
+    var slides = photos.length
+      ? photos.map(function(src){ return '<div class="slide"><img src="'+esc(src)+'" alt="'+esc(p.name[LANG])+'"></div>'; }).join('')
+      : '<div class="slide"><span class="mono">EYE C U</span></div>';
+    var dots = photos.length>1
+      ? '<div class="dots">'+photos.map(function(_,i){ return '<span'+(i===0?' class="on"':'')+'></span>'; }).join('')+'</div>'
+      : '';
     return ''+
     '<article class="product">'+
-      '<div class="ph">'+visual+'</div>'+
+      '<div class="ph"><div class="track">'+slides+'</div>'+dots+'</div>'+
       '<div class="body">'+
         '<div class="collection">'+esc(p.collection[LANG])+'</div>'+
         '<h3>'+esc(p.name[LANG])+'</h3>'+
@@ -592,8 +601,18 @@ function renderProducts(){
       '</div>'+
     '</article>';
   }).join('');
-  g.querySelectorAll('.product .ph img').forEach(function(im){
+  // image cassée -> placeholder sur ce slide
+  g.querySelectorAll('.product .slide img').forEach(function(im){
     im.addEventListener('error',function(){ im.parentNode.innerHTML='<span class="mono">EYE C U</span>'; });
+  });
+  // points de défilement
+  g.querySelectorAll('.product .ph').forEach(function(ph){
+    var track=ph.querySelector('.track'), dots=ph.querySelectorAll('.dots span');
+    if(dots.length<2) return;
+    track.addEventListener('scroll',function(){
+      var i=Math.round(track.scrollLeft/track.clientWidth);
+      dots.forEach(function(d,k){ d.classList.toggle('on',k===i); });
+    },{passive:true});
   });
   g.querySelectorAll('button[data-id]').forEach(function(b){
     b.addEventListener('click',function(){ openApp(b.getAttribute('data-id')); });
