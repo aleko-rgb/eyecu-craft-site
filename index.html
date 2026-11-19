@@ -86,12 +86,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--bordeaux);outline-o
   color:#fff;overflow:hidden;
   /* Photo de présentation reprise du site pro — change l'URL pour une autre image. */
   background:
-    linear-gradient(180deg,rgba(10,5,6,.42),rgba(10,5,6,.70)),
-    url('https://raw.githubusercontent.com/aleko-rgb/eyecu-pro-site/main/images/gallery-4.jpg') center/cover no-repeat,
+    linear-gradient(180deg,rgba(10,5,6,.20) 0%,rgba(10,5,6,.22) 40%,rgba(10,5,6,.72) 80%,rgba(10,5,6,.88) 100%),
+    url('https://raw.githubusercontent.com/aleko-rgb/eyecu-pro-site/main/images/gallery-4.jpg') center top/cover no-repeat,
     linear-gradient(145deg,#1a0a0e 0%,#3a1018 42%,#1c0b10 100%);
-  background-size:cover;background-position:center;
+  background-size:cover;background-position:center top;
 }
-.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,5,6,.05),rgba(10,5,6,.25))}
+/* bande sombre dédiée au bas pour isoler le texte du visage de la photo */
+.hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:52%;z-index:1;
+  background:linear-gradient(180deg,transparent,rgba(10,5,6,.86))}
 .hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 6vw 86px;width:100%}
 .hero .eyebrow{
   font-family:'Jost',sans-serif;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;
@@ -311,8 +313,13 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
     <button class="modal-x" id="irisClose" aria-label="Close">&times;</button>
     <h3 data-t="modal_title"></h3>
     <p class="modal-intro" data-t="modal_intro"></p>
+    <div class="note-modal" data-t="modal_policy"></div>
     <ol class="modal-steps" id="irisSteps"></ol>
+    <div class="note-modal" data-t="modal_expect"></div>
     <div class="note-modal" data-t="modal_note"></div>
+    <div style="text-align:center;margin-top:18px">
+      <button class="btn btn-solid" id="irisStart" data-t="iris_start"></button>
+    </div>
   </div>
 </div>
 
@@ -504,12 +511,15 @@ var TR = {
     foot_made:"Façonné à Poznań, Pologne",
     app_soon:"La personnalisation en ligne arrive très bientôt. En attendant, écrivez-nous sur WhatsApp : +48 532 622 171.",
     foot_privacy:"Confidentialité", foot_iris:"Faire sa photo d'iris",
-    iris_eyebrow:"Faites-le vous-même", iris_title:"Photographiez votre iris au téléphone",
-    iris_sub:"Pas besoin de studio : avec un smartphone récent et un peu de méthode, capturez votre iris à la maison, puis sertissez-le sur le bijou de votre choix.",
-    iris_cta:"Voir le guide photo",
-    modal_title:"Votre iris au smartphone, pas à pas",
-    modal_intro:"Quelques minutes suffisent. Prenez votre temps et photographiez chaque œil séparément.",
-    modal_note:"Astuce : gardez vos 2–3 meilleures photos, nettes et bien contrastées. Les résultats varient selon le modèle de téléphone.",
+    iris_eyebrow:"Option spéciale — bijoux", iris_title:"Vous voulez votre iris sur un bijou ?",
+    iris_sub:"Le portail accepte n'importe quelle photo. Mais si vous souhaitez votre propre iris, vous pouvez le photographier au téléphone : nous validons d'abord la photo (sous 48 h) avant toute commande, et des frais d'édition s'appliquent.",
+    iris_cta:"En savoir plus",
+    iris_start:"Commencer avec mon iris",
+    modal_title:"Votre iris sur un bijou — comment ça marche",
+    modal_intro:"Le site EYE C U Craft sert à mettre n'importe quelle photo sur un bijou. L'iris photographié chez vous est une option réservée aux bijoux, avec une étape de validation.",
+    modal_policy:"1) Vous photographiez votre iris au téléphone et le déposez. 2) Nous vérifions qu'il est exploitable sous 48 h. 3) Si c'est bon, vous recevez un lien pour finaliser la commande — des frais d'édition photo sont ajoutés. Sinon, nous vous demandons d'en reprendre une.",
+    modal_expect:"À savoir : pour une grande pièce ou un tirage mural, rien ne remplace la macrophotographie professionnelle de l'iris. Pour un petit bijou, une photo de téléphone bien faite peut suffire, dans une marge de tolérance.",
+    modal_note:"Astuce : gardez vos 2–3 meilleures photos, nettes et bien contrastées.",
     iris_steps:["Pièce sombre, devant un miroir. Nettoyez l'objectif arrière.","Lumière LED ~5600K (CRI 95+), à 45° sur le côté de l'œil — jamais de face, pas de ring light.","La lumière vive rétrécit la pupille et révèle l'iris.","Appareil photo arrière, mode Photo, objectif 0,5× (ultra grand-angle).","Approchez lentement jusqu'à ~2 cm : le mode macro s'active (icône fleur).","Restez à 0,5× ou 1× — ne zoomez pas au-delà.","Touchez l'iris pour verrouiller mise au point et exposition, ajustez la luminosité.","Stabilisez-vous : coudes sur un plan, dos au mur, ou mini-trépied.","Déclenchez sans toucher : retardateur 3 s ou commande vocale.","Clignez 5–6 fois, ouvrez grand, max ~5 s par prise.","Prenez 10–15 photos par œil, gardez les meilleures.","À éviter : zoom >1×, cils/larmes, pupille trop sombre, reflets, caméra selfie."]
   },
   en:{
@@ -534,12 +544,15 @@ var TR = {
     foot_made:"Crafted in Poznań, Poland",
     app_soon:"Online personalisation is coming very soon. In the meantime, write to us on WhatsApp: +48 532 622 171.",
     foot_privacy:"Privacy", foot_iris:"Photograph your iris",
-    iris_eyebrow:"Do it yourself", iris_title:"Photograph your iris with your phone",
-    iris_sub:"No studio needed: with a recent smartphone and a little method, capture your iris at home, then set it on the jewel of your choice.",
-    iris_cta:"See the photo guide",
-    modal_title:"Your iris on a smartphone, step by step",
-    modal_intro:"A few minutes is enough. Take your time and photograph each eye separately.",
-    modal_note:"Tip: keep your 2–3 best shots, sharp and well-contrasted. Results vary by phone model.",
+    iris_eyebrow:"Special option — jewellery", iris_title:"Want your own iris on a jewel?",
+    iris_sub:"The portal takes any photo. But if you'd like your own iris, you can shoot it with your phone: we validate the photo first (within 48 h) before any order, and an editing fee applies.",
+    iris_cta:"Learn more",
+    iris_start:"Start with my iris",
+    modal_title:"Your iris on a jewel — how it works",
+    modal_intro:"EYE C U Craft is for setting any photo on a jewel. A home-shot iris is an option reserved to jewellery, with a validation step.",
+    modal_policy:"1) You photograph your iris with your phone and upload it. 2) We check it's usable within 48 h. 3) If it's good, you receive a link to finalise the order — a photo editing fee is added. If not, we ask you for a new shot.",
+    modal_expect:"Good to know: for a large piece or a wall print, nothing replaces professional iris macrophotography. For a small jewel, a well-taken phone photo can be enough, within a tolerance margin.",
+    modal_note:"Tip: keep your 2–3 best shots, sharp and well-contrasted.",
     iris_steps:["Dark room, in front of a mirror. Wipe the rear lens.","LED light ~5600K (CRI 95+), 45° to the side of the eye — never head-on, no ring light.","Bright light shrinks the pupil and reveals the iris.","Rear camera, Photo mode, 0.5× (ultra-wide) lens.","Move slowly to ~2 cm: macro mode kicks in (flower icon).","Stay at 0.5× or 1× — don't zoom beyond.","Tap the iris to lock focus and exposure, adjust brightness.","Brace yourself: elbows on a surface, head to a wall, or a mini tripod.","Shoot without touching: 3-sec timer or Voice Control.","Blink 5–6 times, open wide, max ~5 s per shot.","Take 10–15 photos per eye, keep the best.","Avoid: zoom >1×, lashes/tears, too-dark pupil, reflections, selfie camera."]
   },
   pl:{
@@ -564,12 +577,15 @@ var TR = {
     foot_made:"Wykonano w Poznaniu, Polska",
     app_soon:"Personalizacja online będzie dostępna wkrótce. Tymczasem napisz do nas na WhatsApp: +48 532 622 171.",
     foot_privacy:"Prywatność", foot_iris:"Zrób zdjęcie tęczówki",
-    iris_eyebrow:"Zrób to sam", iris_title:"Sfotografuj tęczówkę telefonem",
-    iris_sub:"Studio niepotrzebne: nowszym smartfonem i odrobiną techniki uchwycisz tęczówkę w domu, a potem oprawisz ją w wybranej biżuterii.",
-    iris_cta:"Zobacz poradnik",
-    modal_title:"Tęczówka telefonem, krok po kroku",
-    modal_intro:"Wystarczy kilka minut. Nie spiesz się i fotografuj każde oko osobno.",
-    modal_note:"Wskazówka: zachowaj 2–3 najlepsze, ostre i kontrastowe ujęcia. Efekt zależy od modelu telefonu.",
+    iris_eyebrow:"Opcja specjalna — biżuteria", iris_title:"Chcesz własną tęczówkę w biżuterii?",
+    iris_sub:"Portal przyjmuje każde zdjęcie. Jeśli jednak chcesz własną tęczówkę, możesz ją sfotografować telefonem: najpierw weryfikujemy zdjęcie (do 48 h) przed zamówieniem, a także doliczamy opłatę za edycję.",
+    iris_cta:"Dowiedz się więcej",
+    iris_start:"Zacznij z moją tęczówką",
+    modal_title:"Twoja tęczówka w biżuterii — jak to działa",
+    modal_intro:"EYE C U Craft służy do umieszczania dowolnego zdjęcia w biżuterii. Tęczówka sfotografowana w domu to opcja zarezerwowana dla biżuterii, z etapem weryfikacji.",
+    modal_policy:"1) Fotografujesz tęczówkę telefonem i wysyłasz. 2) Sprawdzamy, czy nadaje się do użycia, w ciągu 48 h. 3) Jeśli jest dobre, otrzymujesz link, aby dokończyć zamówienie — doliczamy opłatę za edycję zdjęcia. Jeśli nie — prosimy o nowe ujęcie.",
+    modal_expect:"Warto wiedzieć: przy dużej pracy lub wydruku ściennym nic nie zastąpi profesjonalnej makrofotografii tęczówki. Przy małej biżuterii dobrze zrobione zdjęcie telefonem może wystarczyć, w granicach tolerancji.",
+    modal_note:"Wskazówka: zachowaj 2–3 najlepsze, ostre i kontrastowe ujęcia.",
     iris_steps:["Ciemny pokój, przed lustrem. Przetrzyj tylny obiektyw.","Światło LED ~5600K (CRI 95+), pod 45° z boku oka — nigdy na wprost, bez ring light.","Jasne światło zwęża źrenicę i odsłania tęczówkę.","Tylny aparat, tryb Zdjęcie, obiektyw 0,5× (ultraszeroki).","Zbliżaj powoli do ~2 cm: włącza się tryb makro (ikona kwiatka).","Zostań na 0,5× lub 1× — nie zoomuj dalej.","Dotknij tęczówki, by zablokować ostrość i ekspozycję, ustaw jasność.","Ustabilizuj się: łokcie na blacie, głowa przy ścianie lub mini statyw.","Wyzwalaj bez dotykania: samowyzwalacz 3 s lub Sterowanie głosem.","Mrugnij 5–6 razy, otwórz szeroko, maks. ~5 s na ujęcie.","Zrób 10–15 zdjęć na oko, zachowaj najlepsze.","Unikaj: zoom >1×, rzęsy/łzy, zbyt ciemna źrenica, odbicia, aparat do selfie."]
   }
 };
@@ -658,6 +674,12 @@ function openApp(productId){
     "product=" + encodeURIComponent(productId) +
     "&lang=" + LANG + "&cur=" + CUR;
 }
+/* Ouvre l'app en mode "iris maison" (validation avant commande) */
+function openAppIris(){
+  if(!APP_URL){ alert(TR[LANG].app_soon); return; }
+  window.location.href = APP_URL + (APP_URL.indexOf('?')>-1?'&':'?') +
+    "mode=iris&lang=" + LANG + "&cur=" + CUR;
+}
 
 /* --- Application de la langue à tout le DOM --- */
 function applyAppLang(){
@@ -729,6 +751,7 @@ function buildIrisSteps(){
 }
 var irisModal=document.getElementById('irisModal');
 document.getElementById('irisOpen').addEventListener('click',function(){ buildIrisSteps(); irisModal.hidden=false; });
+document.getElementById('irisStart').addEventListener('click',openAppIris);
 document.getElementById('irisClose').addEventListener('click',function(){ irisModal.hidden=true; });
 irisModal.addEventListener('click',function(e){ if(e.target===irisModal) irisModal.hidden=true; });
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') irisModal.hidden=true; });
