@@ -142,6 +142,8 @@ section.block{padding:5.5rem 6vw}
 /* ---------- CATALOGUE ---------- */
 .cat{background:var(--bg)}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1120px;margin:0 auto}
+.group-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:1.6rem;color:var(--bordeaux);text-align:center;margin:2.4rem 0 1.2rem}
+#productGrid .group-title:first-child{margin-top:0}
 .product{
   background:var(--paper);border:1px solid var(--line);border-radius:2px;overflow:hidden;
   display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(14,14,14,.045);
@@ -279,7 +281,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
     <h2 data-t="cat_title"></h2>
     <p data-t="cat_sub"></p>
   </div>
-  <div class="grid container" id="productGrid"><!-- rendu par JS --></div>
+  <div class="container" id="productGrid"><!-- rendu par JS --></div>
 </section>
 
 <!-- ============ REASSURANCE ============ -->
@@ -385,6 +387,12 @@ var PRODUCTS = [
           en:"One-sided necklace, 16 mm cabochon on steel, chain included.",
           pl:"Naszyjnik jednostronny, kaboszon 16 mm na stali, łańcuszek w zestawie."},
     price:{pln:239}, image:"" },
+  { id:"SS-1-10mm-0061", collection:COL_SOFIA,
+    name:{fr:"Collier Sofia une face (10 mm)",en:"Sofia one-sided necklace (10 mm)",pl:"Naszyjnik Sofia jednostronny (10 mm)"},
+    desc:{fr:"Collier une face, cabochon 10 mm sur acier — format discret.",
+          en:"One-sided necklace, 10 mm cabochon on steel — discreet size.",
+          pl:"Naszyjnik jednostronny, kaboszon 10 mm na stali — dyskretny rozmiar."},
+    price:{pln:95.6}, image:"" },
   { id:"S925-2-12mm-0035", collection:COL_LILA,
     name:{fr:"Collier Lila argent 925",en:"Lila silver necklace",pl:"Naszyjnik Lila srebro 925"},
     desc:{fr:"Collier Lila, cabochon 12 mm serti sur argent massif 925.",
@@ -444,7 +452,13 @@ var PRODUCTS = [
     desc:{fr:"Porte-clés, cabochon 25 mm, finition argentée.",
           en:"Key ring, 25 mm cabochon, silver finish.",
           pl:"Brelok, kaboszon 25 mm, srebrne wykończenie."},
-    price:{pln:139}, image:"" }
+    price:{pln:139}, image:"" },
+  { id:"Zn-3-25mm-0056", collection:COL_ACC,
+    name:{fr:"Porte-clés double face",en:"Double-sided key ring",pl:"Brelok dwustronny"},
+    desc:{fr:"Porte-clés double face, cabochon 25 mm — deux photos, finition argentée.",
+          en:"Double-sided key ring, 25 mm cabochon — two photos, silver finish.",
+          pl:"Brelok dwustronny, kaboszon 25 mm — dwa zdjęcia, srebrne wykończenie."},
+    price:{pln:209}, image:"" }
 ];
 
 /* --- Photos produits (réutilise la galerie du site B2C, comme le portail pro) --- */
@@ -453,6 +467,7 @@ var PRODUCTS = [
   var M={
     "SS-1-16mm-0026":["Sofia_doubleSided_necklace","Sofia_doubleSided_necklace_2","Sofia_doubleSided_necklace_3"],
     "SS-1-16mm-0027":["Sofia_necklace_16mm","Sofia_necklace_2_16mm"],
+    "SS-1-10mm-0061":["Sofia_necklace_10mm","Sofia_necklace_2_10mm"],
     "S925-2-12mm-0035":["Lila_silver"],"S925-2-12mm-0036":["Lila_goldPlated"],
     "SS-1-14mm-0034":["Sofia_ring","Sofia_ring_2"],
     "SS-1-16mm-0030":["Sofia_Bracelet1","Sofia_Bracelet1_2"],
@@ -460,7 +475,8 @@ var PRODUCTS = [
     "SS-1-16mm-0031":["Sofia_Bracelet2","Sofia_Bracelet2_2"],
     "SS-1-12mm-0028":["Sofia_earrings1","Sofia_earrings1_2"],
     "SS-1-12mm-0029":["Sofia_earrings2","Sofia_earrings2_2"],
-    "SS-1-12mm-0033":["Sofia_cufflinks"],"Zn-3-25mm-0040":["KeyRing"] };
+    "SS-1-12mm-0033":["Sofia_cufflinks"],"Zn-3-25mm-0040":["KeyRing"],
+    "Zn-3-25mm-0056":["DoubleSided_keyRing"] };
   PRODUCTS.forEach(function(p){ if(M[p.id]){ p.photos=M[p.id].map(function(b){return B+b+"_600.webp";}); p.image=p.photos[0]; } });
 })();
 
@@ -581,34 +597,36 @@ var CUR  = DEFAULT_CUR;
 try{ var sl=localStorage.getItem('craft_lang'); if(sl&&TR[sl]) LANG=sl; }catch(e){}
 try{ var sc=localStorage.getItem('craft_cur');  if(sc&&CURRENCIES[sc]) CUR=sc; }catch(e){}
 
+/* --- Libellés des groupes de collection --- */
+var GROUP_LABELS={
+  fr:{sofia:"Collection Sofia — Acier",lila:"Collection Lila — Argent 925",acc:"Porte-clés"},
+  en:{sofia:"Sofia collection — Steel",lila:"Lila collection — 925 Silver",acc:"Key rings"},
+  pl:{sofia:"Kolekcja Sofia — Stal",lila:"Kolekcja Lila — Srebro 925",acc:"Breloki"}
+};
+
 /* --- Rendu du catalogue --- */
 function renderProducts(){
   var g=document.getElementById('productGrid');
-  g.innerHTML = PRODUCTS.map(function(p){
+  function cardHtml(p){
     var photos = (p.photos&&p.photos.length)?p.photos:(p.image?[p.image]:[]);
     var slides = photos.length
       ? photos.map(function(src){ return '<div class="slide"><img src="'+esc(src)+'" alt="'+esc(p.name[LANG])+'"></div>'; }).join('')
       : '<div class="slide"><span class="mono">EYE C U</span></div>';
-    var dots = photos.length>1
-      ? '<div class="dots">'+photos.map(function(_,i){ return '<span'+(i===0?' class="on"':'')+'></span>'; }).join('')+'</div>'
-      : '';
-    var nav = photos.length>1
-      ? '<button class="nav prev" data-dir="-1" aria-label="prev">‹</button><button class="nav next" data-dir="1" aria-label="next">›</button><div class="count">1/'+photos.length+'</div>'
-      : '';
-    return ''+
-    '<article class="product">'+
-      '<div class="ph"><div class="track">'+slides+'</div>'+nav+dots+'</div>'+
-      '<div class="body">'+
-        '<div class="collection">'+esc(p.collection[LANG])+'</div>'+
-        '<h3>'+esc(p.name[LANG])+'</h3>'+
-        '<p class="desc">'+esc(p.desc[LANG])+'</p>'+
-        '<div class="foot">'+
-          '<span class="price">'+fmtPrice(p)+'</span>'+
-          '<button class="btn btn-solid" data-id="'+esc(p.id)+'">'+esc(TR[LANG].personalize)+'</button>'+
-        '</div>'+
-      '</div>'+
-    '</article>';
-  }).join('');
+    var dots = photos.length>1 ? '<div class="dots">'+photos.map(function(_,i){ return '<span'+(i===0?' class="on"':'')+'></span>'; }).join('')+'</div>' : '';
+    var nav = photos.length>1 ? '<button class="nav prev" data-dir="-1" aria-label="prev">‹</button><button class="nav next" data-dir="1" aria-label="next">›</button><div class="count">1/'+photos.length+'</div>' : '';
+    return '<article class="product"><div class="ph"><div class="track">'+slides+'</div>'+nav+dots+'</div>'+
+      '<div class="body"><div class="collection">'+esc(p.collection[LANG])+'</div><h3>'+esc(p.name[LANG])+'</h3>'+
+      '<p class="desc">'+esc(p.desc[LANG])+'</p><div class="foot"><span class="price">'+fmtPrice(p)+'</span>'+
+      '<button class="btn btn-solid" data-id="'+esc(p.id)+'">'+esc(TR[LANG].personalize)+'</button></div></div></article>';
+  }
+  function grp(p){ return p.group || (p.id.indexOf('S925')===0?'lila':(p.id.indexOf('Zn')===0?'acc':'sofia')); }
+  var order=['sofia','lila','acc'], gl=GROUP_LABELS[LANG]||GROUP_LABELS.fr, html='';
+  order.forEach(function(gk){
+    var items=PRODUCTS.filter(function(p){ return grp(p)===gk; });
+    if(!items.length) return;
+    html += '<h3 class="group-title">'+esc(gl[gk])+'</h3><div class="grid">'+items.map(cardHtml).join('')+'</div>';
+  });
+  g.innerHTML = html;
   // image cassée -> placeholder sur ce slide
   g.querySelectorAll('.product .slide img').forEach(function(im){
     im.addEventListener('error',function(){ im.parentNode.innerHTML='<span class="mono">EYE C U</span>'; });
