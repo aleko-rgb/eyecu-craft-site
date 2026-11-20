@@ -51,8 +51,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--bordeaux);outline-o
   background:transparent;box-shadow:none;transition:background .3s,box-shadow .3s;
 }
 .topbar.scrolled{
-  background:linear-gradient(180deg,var(--bordeaux2),var(--bordeaux));
-  box-shadow:0 2px 14px rgba(107,30,46,.22);
+  background:linear-gradient(180deg,#3a1018,#1c0b10);
+  box-shadow:0 2px 14px rgba(28,11,16,.3);
 }
 .topbar-inner{
   max-width:1200px;margin:0 auto;padding:0 6vw;height:64px;
@@ -136,7 +136,7 @@ section.block{padding:5.5rem 6vw}
 
 /* ---------- CATALOGUE ---------- */
 .cat{background:var(--bg)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1120px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,340px));gap:28px;max-width:1120px;margin:0 auto;justify-content:center}
 .group-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:1.6rem;color:var(--bordeaux);text-align:center;margin:2.4rem 0 1.2rem}
 #productGrid .group-title:first-child{margin-top:0}
 .product{
@@ -192,11 +192,11 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
 /* ---------- RESPONSIVE ---------- */
 @media(max-width:900px){
   .steps{grid-template-columns:1fr;gap:36px}
-  .grid{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:repeat(2,minmax(0,340px))}
   .marks{grid-template-columns:1fr;gap:30px}
 }
 @media(max-width:620px){
-  .grid{grid-template-columns:1fr}
+  .grid{grid-template-columns:minmax(0,340px)}
   .brand .wordmark{display:none}
   .topbar-inner{padding:0 5vw}
   section.block{padding:4rem 5vw}
@@ -362,6 +362,19 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
   <div data-t="loading"></div>
 </div>
 
+<!-- Pop-up d'accueil (après 3 s) : option iris maison -->
+<div class="modal" id="introModal" hidden>
+  <div class="modal-box" style="max-width:480px;text-align:center">
+    <button class="modal-x" id="introClose" aria-label="Close">&times;</button>
+    <h3 data-t="intro_title" style="text-align:center"></h3>
+    <p class="modal-intro" data-t="intro_p" style="text-align:center"></p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:18px">
+      <button class="btn btn-gold" id="introCta" data-t="intro_cta"></button>
+      <button class="btn btn-ghost" id="introMore" data-t="intro_more" style="color:var(--bordeaux);border-color:var(--bordeaux)"></button>
+    </div>
+  </div>
+</div>
+
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="foot-grid">
@@ -371,9 +384,9 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
     </div>
     <div class="foot-col">
       <h4 data-t="foot_contact"></h4>
-      <a href="https://wa.me/48532622171" target="_blank" rel="noopener">WhatsApp +48 532 622 171</a>
+      <a id="footWa" href="https://wa.me/48532622171" target="_blank" rel="noopener"></a>
       <a href="mailto:poznan@eyecu-irisphoto.com">poznan@eyecu-irisphoto.com</a>
-      <a href="https://www.eyecuirisphoto.com" target="_blank" rel="noopener">www.eyecuirisphoto.com</a>
+      <a href="https://craft.eye-c-u.eu" target="_blank" rel="noopener">craft.eye-c-u.eu</a>
     </div>
     <div class="foot-col">
       <h4 data-t="foot_links"></h4>
@@ -554,6 +567,9 @@ var TR = {
     iris_sub:"Le portail accepte n'importe quelle photo. Mais si vous souhaitez votre propre iris, vous pouvez le photographier au téléphone : nous validons d'abord la photo (sous 48 h) avant toute commande, et des frais d'édition s'appliquent.",
     iris_cta:"En savoir plus",
     iris_start:"Commencer avec mon iris",
+    intro_title:"Et si c'était votre iris ?",
+    intro_p:"Vous pouvez photographier votre propre iris à la maison et le faire sertir sur un bijou. Notre équipe le retravaille pour un rendu unique.",
+    intro_cta:"Commencer avec mon iris",intro_more:"En savoir plus",
     loading:"Ouverture…",
     choice_title:"Comment voulez-vous personnaliser ?",
     choice_intro:"Deux parcours, selon votre photo.",
@@ -596,6 +612,9 @@ var TR = {
     iris_sub:"The portal takes any photo. But if you'd like your own iris, you can shoot it with your phone: we validate the photo first (within 48 h) before any order, and an editing fee applies.",
     iris_cta:"Learn more",
     iris_start:"Start with my iris",
+    intro_title:"What if it were your iris?",
+    intro_p:"You can photograph your own iris at home and have it set on a jewel. Our team reworks it for a unique result.",
+    intro_cta:"Start with my iris",intro_more:"Learn more",
     loading:"Opening…",
     choice_title:"How would you like to personalise?",
     choice_intro:"Two paths, depending on your photo.",
@@ -638,6 +657,9 @@ var TR = {
     iris_sub:"Portal przyjmuje każde zdjęcie. Jeśli jednak chcesz własną tęczówkę, możesz ją sfotografować telefonem: najpierw weryfikujemy zdjęcie (do 48 h) przed zamówieniem, a także doliczamy opłatę za edycję.",
     iris_cta:"Dowiedz się więcej",
     iris_start:"Zacznij z moją tęczówką",
+    intro_title:"A gdyby to była Twoja tęczówka?",
+    intro_p:"Możesz sfotografować własną tęczówkę w domu i oprawić ją w biżuterii. Nasz zespół opracowuje ją dla wyjątkowego efektu.",
+    intro_cta:"Zacznij z moją tęczówką",intro_more:"Dowiedz się więcej",
     loading:"Otwieranie…",
     choice_title:"Jak chcesz spersonalizować?",
     choice_intro:"Dwie ścieżki, zależnie od zdjęcia.",
@@ -702,7 +724,7 @@ function renderProducts(){
       '<button class="btn btn-solid" data-id="'+esc(p.id)+'">'+esc(TR[LANG].personalize)+'</button></div></div></article>';
   }
   function grp(p){ return p.group || (p.id.indexOf('S925')===0?'lila':(p.id.indexOf('Zn')===0?'acc':'sofia')); }
-  var order=['sofia','lila','acc'], gl=GROUP_LABELS[LANG]||GROUP_LABELS.fr, html='';
+  var order=['lila','sofia','acc'], gl=GROUP_LABELS[LANG]||GROUP_LABELS.fr, html='';
   order.forEach(function(gk){
     var items=PRODUCTS.filter(function(p){ return grp(p)===gk; });
     if(!items.length) return;
@@ -769,6 +791,11 @@ function applyAppLang(){
   document.querySelectorAll('.lang button').forEach(function(b){
     b.classList.toggle('on', b.getAttribute('data-lang')===LANG);
   });
+  // WhatsApp selon la langue : FR -> 532 622 171 ; EN/PL -> 509 151 841
+  var wa=document.getElementById('footWa');
+  if(wa){ var num = (LANG==='fr') ? '48532622171' : '48509151841';
+    wa.href='https://wa.me/'+num;
+    wa.textContent='WhatsApp +'+num.replace(/^48/,'48 ').replace(/(\d{3})(\d{3})(\d{3})$/,'$1 $2 $3'); }
   renderProducts();
 }
 
@@ -833,6 +860,17 @@ document.getElementById('irisStart').addEventListener('click',function(){ openAp
 document.getElementById('irisClose').addEventListener('click',function(){ irisModal.hidden=true; });
 irisModal.addEventListener('click',function(e){ if(e.target===irisModal) irisModal.hidden=true; });
 
+/* --- Pop-up d'accueil (après 3 s, une fois par session) --- */
+var introModal=document.getElementById('introModal');
+document.getElementById('introClose').addEventListener('click',function(){ introModal.hidden=true; });
+introModal.addEventListener('click',function(e){ if(e.target===introModal) introModal.hidden=true; });
+document.getElementById('introCta').addEventListener('click',function(){ introModal.hidden=true; openAppIris(); });
+document.getElementById('introMore').addEventListener('click',function(){ introModal.hidden=true; buildIrisSteps(); document.getElementById('irisModal').hidden=false; });
+(function(){ var seen; try{ seen=sessionStorage.getItem('craft_intro'); }catch(e){}
+  if(seen) return;
+  setTimeout(function(){ if(APP_URL){ introModal.hidden=false; try{ sessionStorage.setItem('craft_intro','1'); }catch(e){} } }, 3000);
+})();
+
 /* --- Pop-up choix A/B --- */
 var choiceModal=document.getElementById('choiceModal');
 document.getElementById('choiceClose').addEventListener('click',function(){ choiceModal.hidden=true; });
@@ -840,7 +878,7 @@ choiceModal.addEventListener('click',function(e){ if(e.target===choiceModal) cho
 document.getElementById('choiceA').addEventListener('click',function(){ choiceModal.hidden=true; openApp(choiceProductId); });
 document.getElementById('choiceB').addEventListener('click',function(){ choiceModal.hidden=true; openAppIris(choiceProductId); });
 
-document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ irisModal.hidden=true; choiceModal.hidden=true; } });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ irisModal.hidden=true; choiceModal.hidden=true; introModal.hidden=true; } });
 
 applyAppLang();
 applyCurrency();
