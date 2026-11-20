@@ -84,8 +84,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--bordeaux);outline-o
 /* Photo affichée EN ENTIER (non recadrée), texte dans une bande sombre en dessous
    pour ne jamais couvrir les visages. Change l'URL de l'img pour une autre photo. */
 .hero{position:relative;color:#fff;overflow:hidden;background:#140a0c}
-.hero-photo{display:block;width:100%;line-height:0;background:#140a0c}
-.hero-photo img{width:100%;height:auto;display:block}
+/* hauteur plafonnée : on garde le haut (visages + colliers) et on coupe le bas.
+   Ajuste object-position (ex. "center 10%") pour remonter/descendre le cadrage. */
+.hero-photo{display:block;width:100%;height:clamp(380px,68vh,620px);overflow:hidden;background:#140a0c}
+.hero-photo img{width:100%;height:100%;display:block;object-fit:cover;object-position:center top}
 .hero-text{background:linear-gradient(160deg,#1a0a0e 0%,#3a1018 55%,#1c0b10 100%);padding:3rem 6vw 3.4rem}
 .hero-inner{max-width:1200px;margin:0 auto;width:100%}
 .hero .eyebrow{
@@ -360,7 +362,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
    ======================================================================= */
 
 var LOGO_URL   = "https://raw.githubusercontent.com/aleko-rgb/eyecu-pro-site/main/images/logo-v2.png";
-var APP_URL    = "https://script.google.com/a/macros/eyecu-irisphoto.com/s/AKfycbwLnOBgaTOW8-utLP9UHTXvhe5Ol2spQjPR1cAFWQ6Jy4gUljGveV78pgUxxTjMC1k9/exec";    // URL /exec de la web app Apps Script. Sert l'app de perso
+var APP_URL    = "https://script.google.com/a/macros/eyecu-irisphoto.com/s/AKfycbwLnOBgaTOW8-utLP9UHTXvhe5Ol2spQjPR1cAFWQ6Jy4gUljGveV78pgUxxTjMC1k9/exec";        // URL /exec de la web app Apps Script. Sert l'app de perso
                             // ET le catalogue (?api=catalog). ex: "https://script.google.com/macros/s/XXXX/exec"
 var FX_EUR_PLN = 4.30;      // taux PLN->EUR indicatif pour l'affichage
 
