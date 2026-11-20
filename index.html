@@ -81,30 +81,21 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--bordeaux);outline-o
 .lang button.on,.cur button.on{background:#fff;color:var(--bordeaux);border-color:#fff}
 
 /* ---------- HERO ---------- */
-.hero{
-  position:relative;min-height:84vh;display:flex;align-items:flex-end;
-  color:#fff;overflow:hidden;
-  /* Photo de présentation reprise du site pro — change l'URL pour une autre image. */
-  background:
-    linear-gradient(180deg,rgba(10,5,6,.20) 0%,rgba(10,5,6,.22) 40%,rgba(10,5,6,.72) 80%,rgba(10,5,6,.88) 100%),
-    url('https://raw.githubusercontent.com/aleko-rgb/eyecu-pro-site/main/images/gallery-4.jpg') center top/cover no-repeat,
-    linear-gradient(145deg,#1a0a0e 0%,#3a1018 42%,#1c0b10 100%);
-  background-size:cover;background-position:center top;
-}
-/* bande sombre dédiée au bas pour isoler le texte du visage de la photo */
-.hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:52%;z-index:1;
-  background:linear-gradient(180deg,transparent,rgba(10,5,6,.86))}
-.hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 6vw 86px;width:100%}
+/* Photo affichée EN ENTIER (non recadrée), texte dans une bande sombre en dessous
+   pour ne jamais couvrir les visages. Change l'URL de l'img pour une autre photo. */
+.hero{position:relative;color:#fff;overflow:hidden;background:#140a0c}
+.hero-photo{display:block;width:100%;line-height:0;background:#140a0c}
+.hero-photo img{width:100%;height:auto;display:block}
+.hero-text{background:linear-gradient(160deg,#1a0a0e 0%,#3a1018 55%,#1c0b10 100%);padding:3rem 6vw 3.4rem}
+.hero-inner{max-width:1200px;margin:0 auto;width:100%}
 .hero .eyebrow{
   font-family:'Jost',sans-serif;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:1.4rem;
+  color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:1rem;
 }
 .hero .eyebrow::before{content:'';width:34px;height:1px;background:var(--gold)}
-.hero h1{font-size:clamp(2.4rem,6.5vw,4.8rem);line-height:1.04;max-width:16ch;margin-bottom:.45em;text-wrap:balance;text-transform:uppercase;letter-spacing:.01em}
-.hero h1 em{font-style:normal;color:#fff}
-.scroll-ind{position:absolute;right:6vw;bottom:26px;z-index:2;font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.82);display:flex;align-items:center;gap:10px}
-.scroll-ind::before{content:'';width:1px;height:26px;background:rgba(255,255,255,.6)}
-.hero p{font-weight:300;font-size:clamp(1rem,2vw,1.2rem);max-width:46ch;color:rgba(255,255,255,.88);margin-bottom:2.2rem}
+.hero h1{font-size:clamp(2rem,5vw,3.8rem);line-height:1.05;max-width:20ch;margin-bottom:.4em;text-wrap:balance;text-transform:uppercase;letter-spacing:.01em}
+.hero h1 em{font-style:normal;color:#f0d9b8}
+.hero p{font-weight:300;font-size:clamp(1rem,2vw,1.15rem);max-width:52ch;color:rgba(255,255,255,.85);margin-bottom:1.8rem}
 .hero .cta-row{display:flex;flex-wrap:wrap;gap:14px}
 
 /* ---------- BUTTONS ---------- */
@@ -250,16 +241,20 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
 
 <!-- ============ HERO ============ -->
 <section class="hero">
-  <div class="hero-inner">
-    <div class="eyebrow" data-t="hero_eyebrow"></div>
-    <h1 data-t="hero_title"></h1>
-    <p data-t="hero_sub"></p>
-    <div class="cta-row">
-      <a href="#catalogue" class="btn btn-solid" data-t="hero_cta1"></a>
-      <a href="#how" class="btn btn-white" data-t="hero_cta2"></a>
+  <div class="hero-photo">
+    <img src="https://raw.githubusercontent.com/aleko-rgb/eyecu-pro-site/main/images/gallery-4.jpg" alt="">
+  </div>
+  <div class="hero-text">
+    <div class="hero-inner">
+      <div class="eyebrow" data-t="hero_eyebrow"></div>
+      <h1 data-t="hero_title"></h1>
+      <p data-t="hero_sub"></p>
+      <div class="cta-row">
+        <a href="#catalogue" class="btn btn-solid" data-t="hero_cta1"></a>
+        <a href="#how" class="btn btn-white" data-t="hero_cta2"></a>
+      </div>
     </div>
   </div>
-  <div class="scroll-ind">Scroll</div>
 </section>
 
 <!-- ============ HOW IT WORKS ============ -->
@@ -365,7 +360,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
    ======================================================================= */
 
 var LOGO_URL   = "https://raw.githubusercontent.com/aleko-rgb/eyecu-pro-site/main/images/logo-v2.png";
-var APP_URL    = "https://script.google.com/a/macros/eyecu-irisphoto.com/s/AKfycbwLnOBgaTOW8-utLP9UHTXvhe5Ol2spQjPR1cAFWQ6Jy4gUljGveV78pgUxxTjMC1k9/exec";        // URL /exec de la web app Apps Script. Sert l'app de perso
+var APP_URL    = "https://script.google.com/a/macros/eyecu-irisphoto.com/s/AKfycbwLnOBgaTOW8-utLP9UHTXvhe5Ol2spQjPR1cAFWQ6Jy4gUljGveV78pgUxxTjMC1k9/exec";    // URL /exec de la web app Apps Script. Sert l'app de perso
                             // ET le catalogue (?api=catalog). ex: "https://script.google.com/macros/s/XXXX/exec"
 var FX_EUR_PLN = 4.30;      // taux PLN->EUR indicatif pour l'affichage
 
