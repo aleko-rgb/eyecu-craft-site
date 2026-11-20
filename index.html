@@ -214,6 +214,21 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
 .modal-steps li:first-child{border-top:none}
 .modal-steps li::before{counter-increment:is;content:counter(is);position:absolute;left:0;top:9px;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#fff;font-family:'Cormorant Garamond',serif;font-style:italic;display:flex;align-items:center;justify-content:center;font-size:.9rem}
 .note-modal{background:var(--bg);border:1px solid var(--line);border-radius:2px;padding:12px 14px;font-size:.85rem;color:var(--grey);margin-top:16px}
+/* ---- Choix A/B (Personnaliser) ---- */
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.choice-card{border:1px solid var(--line);border-radius:4px;padding:16px;display:flex;flex-direction:column}
+.choice-card h4{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:1.25rem;color:var(--bordeaux);margin:0 0 .4em}
+.choice-card p{font-weight:300;font-size:.9rem;color:var(--grey);margin:0 0 16px;flex:1}
+.choice-card .btn{width:100%;text-align:center}
+@media(max-width:560px){.choice-grid{grid-template-columns:1fr}}
+/* ---- Sablier plein écran au lancement de l'app ---- */
+.app-loader{position:fixed;inset:0;z-index:200;background:rgba(10,5,6,.72);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:16px;color:#fff;font-family:'Jost',sans-serif;
+  letter-spacing:.14em;text-transform:uppercase;font-size:.8rem}
+.app-loader[hidden]{display:none}
+.app-loader .spin{width:42px;height:42px;border-radius:50%;border:3px solid rgba(255,255,255,.25);
+  border-top-color:#fff;animation:spin 0.9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -318,6 +333,33 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:4rem 6vw 2.4rem
       <button class="btn btn-solid" id="irisStart" data-t="iris_start"></button>
     </div>
   </div>
+</div>
+
+<!-- Modal choix A/B (au clic sur « Personnaliser ») -->
+<div class="modal" id="choiceModal" hidden>
+  <div class="modal-box">
+    <button class="modal-x" id="choiceClose" aria-label="Close">&times;</button>
+    <h3 data-t="choice_title"></h3>
+    <p class="modal-intro" data-t="choice_intro"></p>
+    <div class="choice-grid">
+      <div class="choice-card">
+        <h4 data-t="choiceA_t"></h4>
+        <p data-t="choiceA_p"></p>
+        <button class="btn btn-solid" id="choiceA" data-t="choiceA_cta"></button>
+      </div>
+      <div class="choice-card">
+        <h4 data-t="choiceB_t"></h4>
+        <p data-t="choiceB_p"></p>
+        <button class="btn btn-gold" id="choiceB" data-t="choiceB_cta"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sablier plein écran au lancement de l'app -->
+<div class="app-loader" id="appLoader" hidden>
+  <div class="spin"></div>
+  <div data-t="loading"></div>
 </div>
 
 <!-- ============ FOOTER ============ -->
@@ -512,6 +554,15 @@ var TR = {
     iris_sub:"Le portail accepte n'importe quelle photo. Mais si vous souhaitez votre propre iris, vous pouvez le photographier au téléphone : nous validons d'abord la photo (sous 48 h) avant toute commande, et des frais d'édition s'appliquent.",
     iris_cta:"En savoir plus",
     iris_start:"Commencer avec mon iris",
+    loading:"Ouverture…",
+    choice_title:"Comment voulez-vous personnaliser ?",
+    choice_intro:"Deux parcours, selon votre photo.",
+    choiceA_t:"J'ai déjà ma photo",
+    choiceA_p:"Vous téléversez votre photo, la recadrez dans le cercle et commandez directement.",
+    choiceA_cta:"Utiliser ma photo",
+    choiceB_t:"Photo d'iris maison",
+    choiceB_p:"Soumettez votre photo d'iris (sans recadrage) pour validation par notre équipe de design. Si elle est validée : prix = bijou + retouche + livraison (gratuite à Poznań).",
+    choiceB_cta:"Soumettre pour validation",
     modal_title:"Votre iris sur un bijou — comment ça marche",
     modal_intro:"Le site EYE C U Craft sert à mettre n'importe quelle photo sur un bijou. L'iris photographié chez vous est une option réservée aux bijoux, avec une étape de validation.",
     modal_policy:"1) Vous photographiez votre iris au téléphone et le déposez. 2) Nous vérifions qu'il est exploitable sous 48 h. 3) Si c'est bon, vous recevez un lien pour finaliser la commande — des frais d'édition photo sont ajoutés. Sinon, nous vous demandons d'en reprendre une.",
@@ -545,6 +596,15 @@ var TR = {
     iris_sub:"The portal takes any photo. But if you'd like your own iris, you can shoot it with your phone: we validate the photo first (within 48 h) before any order, and an editing fee applies.",
     iris_cta:"Learn more",
     iris_start:"Start with my iris",
+    loading:"Opening…",
+    choice_title:"How would you like to personalise?",
+    choice_intro:"Two paths, depending on your photo.",
+    choiceA_t:"I already have my photo",
+    choiceA_p:"Upload your photo, frame it in the circle and order directly.",
+    choiceA_cta:"Use my photo",
+    choiceB_t:"Home iris photo",
+    choiceB_p:"Submit your iris photo (no cropping) for validation by our design team. If approved: price = jewel + rework + shipping (free in Poznań).",
+    choiceB_cta:"Submit for validation",
     modal_title:"Your iris on a jewel — how it works",
     modal_intro:"EYE C U Craft is for setting any photo on a jewel. A home-shot iris is an option reserved to jewellery, with a validation step.",
     modal_policy:"1) You photograph your iris with your phone and upload it. 2) We check it's usable within 48 h. 3) If it's good, you receive a link to finalise the order — a photo editing fee is added. If not, we ask you for a new shot.",
@@ -578,6 +638,15 @@ var TR = {
     iris_sub:"Portal przyjmuje każde zdjęcie. Jeśli jednak chcesz własną tęczówkę, możesz ją sfotografować telefonem: najpierw weryfikujemy zdjęcie (do 48 h) przed zamówieniem, a także doliczamy opłatę za edycję.",
     iris_cta:"Dowiedz się więcej",
     iris_start:"Zacznij z moją tęczówką",
+    loading:"Otwieranie…",
+    choice_title:"Jak chcesz spersonalizować?",
+    choice_intro:"Dwie ścieżki, zależnie od zdjęcia.",
+    choiceA_t:"Mam już swoje zdjęcie",
+    choiceA_p:"Prześlij zdjęcie, wykadruj w kole i zamów bezpośrednio.",
+    choiceA_cta:"Użyj mojego zdjęcia",
+    choiceB_t:"Zdjęcie tęczówki z domu",
+    choiceB_p:"Prześlij zdjęcie tęczówki (bez kadrowania) do weryfikacji przez nasz zespół. Po zatwierdzeniu: cena = biżuteria + obróbka + wysyłka (gratis w Poznaniu).",
+    choiceB_cta:"Wyślij do weryfikacji",
     modal_title:"Twoja tęczówka w biżuterii — jak to działa",
     modal_intro:"EYE C U Craft służy do umieszczania dowolnego zdjęcia w biżuterii. Tęczówka sfotografowana w domu to opcja zarezerwowana dla biżuterii, z etapem weryfikacji.",
     modal_policy:"1) Fotografujesz tęczówkę telefonem i wysyłasz. 2) Sprawdzamy, czy nadaje się do użycia, w ciągu 48 h. 3) Jeśli jest dobre, otrzymujesz link, aby dokończyć zamówienie — doliczamy opłatę za edycję zdjęcia. Jeśli nie — prosimy o nowe ujęcie.",
@@ -660,22 +729,34 @@ function renderProducts(){
     },{passive:true});
   });
   g.querySelectorAll('button[data-id]').forEach(function(b){
-    b.addEventListener('click',function(){ openApp(b.getAttribute('data-id')); });
+    b.addEventListener('click',function(){ openChoice(b.getAttribute('data-id')); });
   });
 }
 
-/* --- Ouverture de l'app (étape 2). Tant que APP_URL est vide : message. --- */
-function openApp(productId){
+/* --- Sablier + navigation vers l'app --- */
+function goToApp(url){
   if(!APP_URL){ alert(TR[LANG].app_soon); return; }
-  window.location.href = APP_URL + (APP_URL.indexOf('?')>-1?'&':'?') +
-    "product=" + encodeURIComponent(productId) +
-    "&lang=" + LANG + "&cur=" + CUR;
+  var ld=document.getElementById('appLoader'); if(ld) ld.hidden=false;
+  setTimeout(function(){ window.location.href=url; }, 120);
 }
-/* Ouvre l'app en mode "iris maison" (validation avant commande) */
-function openAppIris(){
+/* Option A : commande avec la photo du client (upload + recadrage) */
+function openApp(productId){
+  goToApp(APP_URL + (APP_URL.indexOf('?')>-1?'&':'?') +
+    "product=" + encodeURIComponent(productId) + "&lang=" + LANG + "&cur=" + CUR);
+}
+/* Option B : iris maison (validation équipe design avant commande). productId optionnel. */
+function openAppIris(productId){
+  var u = APP_URL + (APP_URL.indexOf('?')>-1?'&':'?') + "mode=iris&lang=" + LANG + "&cur=" + CUR;
+  if(productId) u += "&product=" + encodeURIComponent(productId);
+  goToApp(u);
+}
+
+/* --- Pop-up de choix A/B au clic sur « Personnaliser » --- */
+var choiceProductId=null;
+function openChoice(productId){
   if(!APP_URL){ alert(TR[LANG].app_soon); return; }
-  window.location.href = APP_URL + (APP_URL.indexOf('?')>-1?'&':'?') +
-    "mode=iris&lang=" + LANG + "&cur=" + CUR;
+  choiceProductId=productId;
+  document.getElementById('choiceModal').hidden=false;
 }
 
 /* --- Application de la langue à tout le DOM --- */
@@ -748,10 +829,18 @@ function buildIrisSteps(){
 }
 var irisModal=document.getElementById('irisModal');
 document.getElementById('irisOpen').addEventListener('click',function(){ buildIrisSteps(); irisModal.hidden=false; });
-document.getElementById('irisStart').addEventListener('click',openAppIris);
+document.getElementById('irisStart').addEventListener('click',function(){ openAppIris(); });
 document.getElementById('irisClose').addEventListener('click',function(){ irisModal.hidden=true; });
 irisModal.addEventListener('click',function(e){ if(e.target===irisModal) irisModal.hidden=true; });
-document.addEventListener('keydown',function(e){ if(e.key==='Escape') irisModal.hidden=true; });
+
+/* --- Pop-up choix A/B --- */
+var choiceModal=document.getElementById('choiceModal');
+document.getElementById('choiceClose').addEventListener('click',function(){ choiceModal.hidden=true; });
+choiceModal.addEventListener('click',function(e){ if(e.target===choiceModal) choiceModal.hidden=true; });
+document.getElementById('choiceA').addEventListener('click',function(){ choiceModal.hidden=true; openApp(choiceProductId); });
+document.getElementById('choiceB').addEventListener('click',function(){ choiceModal.hidden=true; openAppIris(choiceProductId); });
+
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ irisModal.hidden=true; choiceModal.hidden=true; } });
 
 applyAppLang();
 applyCurrency();
